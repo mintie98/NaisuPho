@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1098029441074",
+    "firebase_url": "https://naisupho-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "naisupho",
+    "storage_bucket": "naisupho.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098029441074:android:5eb122f794828aa149dc2b",
+        "android_client_info": {
+          "package_name": "com.example.naisupho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098029441074-qmiepn5a41ekdh0ol29dp7nlpmei544k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.naisupho",
+            "certificate_hash": "fa4c907cab20d19b804bb44e2dfd96bfc0a4f85e"
+          }
+        },
+        {
+          "client_id": "1098029441074-nka3ea0kc23687ij2kjmsivt2kv5lmod.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPZ3Dqu7ig6xv4vjPXyCbYCu0ur3dl7z8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098029441074-nka3ea0kc23687ij2kjmsivt2kv5lmod.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/pImageName"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:scaleType="center" />
+            <TextView
+                android:id="@+id/itemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="start">
+
+                <ImageView
+                    android:id="@+id/storeIcon"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/storeicon"
+                    android:layout_alignParentStart="true"/>
+                <TextView
+                    android:id="@+id/storeName"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:textSize="11sp"
+                    android:layout_toEndOf="@id/storeIcon"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="start"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/star"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/star"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/rate"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:layout_toEndOf="@id/star"
+                    android:layout_marginStart="2dp"
+                    android:gravity="center_vertical"/>
+
+                <ImageView
+                    android:id="@+id/loca"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:src="@drawable/location"
+                    android:layout_toStartOf="@id/txtLoca"
+                    android:gravity="center_vertical"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/txtLoca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_alignParentEnd="true"/>
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">NaisuPho</string>
+    <string name="name_app">Naisu Pho</string>
+    <string name="slogan">Let’s Experience Vietnamese Cuisine Everywhere</string>
+    <string name="default_web_client_id" translatable="false">1098029441074-qmiepn5a41ekdh0ol29dp7nlpmei544k.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">1098029441074</string>
+    <string name="google_api_key" translatable="false">AIzaSyDPZ3Dqu7ig6xv4vjPXyCbYCu0ur3dl7z8</string>
+    <string name="google_app_id" translatable="false">1:1098029441074:android:5eb122f794828aa149dc2b</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="price_format">￥%1$d</string>
+    <string name="distance_format">%s km</string>
+
+</resources>
