@@ -11,6 +11,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -22,6 +24,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.LocationSettingsStatusCodes
 import com.example.naisupho.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 import java.io.IOException
@@ -39,6 +42,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        var NavController= findNavController(R.id.fragmentContainerView)
+        var bottomnav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomnav.setupWithNavController(NavController)
+//        binding.notificationButton.setOnClickListener {
+//            val bottomSheetDialog = Notifaction_Bottom_Fragment()
+//            bottomSheetDialog.show(supportFragmentManager,"Test")
+//        }
 
         // Initialize Google Sign In (if needed)
         mAuth = FirebaseAuth.getInstance()

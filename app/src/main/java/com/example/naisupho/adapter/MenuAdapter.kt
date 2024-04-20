@@ -59,8 +59,7 @@ class MenuAdapter (private val menuItemsName:MutableList<String>,private val men
             binding.rate.text= rate
             binding.storeName.text = store
             binding.txtLoca.text = context.getString(R.string.distance_format, distance)
-            val uriString = images
-            val uri = Uri.parse(uriString)
+            val uri = Uri.parse(images)
             Glide.with(requireContext).load(uri).into(imagesView)
         }
     }

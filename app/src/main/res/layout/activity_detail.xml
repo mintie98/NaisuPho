@@ -7,4 +7,74 @@
     android:layout_height="match_parent"
     tools:context=".DetailActivity">
 
+    <ImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_left" />
+
+    <TextView
+        android:id="@+id/detailItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/yeonsung_regular"
+        android:text="FoodName"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backBtn" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView4"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailItemName">
+
+        <ImageView
+            android:id="@+id/DetailItemImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/detailItemPrice"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/cardView4"
+        app:layout_constraintStart_toStartOf="@+id/cardView4"
+        app:layout_constraintTop_toBottomOf="@+id/cardView4" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addtocartbtn"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/addtocartshape"
+        android:fontFamily="@font/yeonsung_regular"
+        android:text="Add To Cart"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

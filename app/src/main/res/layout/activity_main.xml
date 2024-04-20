@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="wrap_content"
@@ -33,7 +32,6 @@
         app:layout_constraintTop_toTopOf="@+id/searchView"
         app:srcCompat="@drawable/bell" />
 
-
     <ImageView
         android:id="@+id/location"
         android:layout_width="32dp"
@@ -42,7 +40,6 @@
         app:layout_constraintStart_toStartOf="@+id/searchView"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:srcCompat="@drawable/loca_icon" />
-
 
     <TextView
         android:id="@+id/txtLocation"
@@ -67,6 +64,15 @@
         app:layout_constraintTop_toBottomOf="@+id/location"
         app:layout_constraintVertical_bias="1.0"
         app:navGraph="@navigation/navigation" />
+
+    <FrameLayout
+        android:id="@+id/cartFragmentContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
