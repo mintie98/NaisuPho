@@ -1,6 +1,7 @@
 package com.example.naisupho
 
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
@@ -24,11 +25,18 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.LocationSettingsStatusCodes
 import com.example.naisupho.databinding.ActivityMainBinding
+import com.example.naisupho.model.CartItems
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 import java.io.IOException
 import java.util.Locale
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,13 +45,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
+    private var totalCartItems = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var NavController= findNavController(R.id.fragmentContainerView)
+        var NavController = findNavController(R.id.fragmentContainerView)
         var bottomnav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomnav.setupWithNavController(NavController)
 //        binding.notificationButton.setOnClickListener {
@@ -65,130 +74,45 @@ class MainActivity : AppCompatActivity() {
             interval = 5000 // Update location every 5 seconds
             fastestInterval = 2000 // Minimum time between location updates (optional)
         }
-
-        binding.location.setOnClickListener {
-            checkLocationPermissionAndRequestUpdates()
-        }
+        updateCartItemCount()
     }
+    private fun updateCartItemCount() {
+        // Get the reference to the Firebase database
+        val database = FirebaseDatabase.getInstance().reference
+        val userId = mAuth.currentUser?.uid ?: ""
 
-    private fun checkLocationPermissionAndRequestUpdates() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION_PERMISSION
-            )
-            return
-        }
-        // Sử dụng coroutine để thực hiện hoạt động không đồng bộ
-        CoroutineScope(Dispatchers.Main).launch {
-            requestLocationUpdates()
-        }
-    }
+        // Get the reference to the user's cart items
+        val cartItemsRef = database.child("Users").child(userId).child("CartItems")
 
-    private suspend fun requestLocationUpdates() {
-        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
-        builder.setAlwaysShow(true)
+        // Listen for changes in the cart items
+        cartItemsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Reset the total cart items count
+                totalCartItems = 0
 
-        val result = LocationServices.getSettingsClient(this@MainActivity).checkLocationSettings(builder.build())
-        try {
-            val response = result.await()
-            getUserLocation()
-        } catch (e: ApiException) {
-            when (e.statusCode) {
-                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                    val resolvableApiException = e as ResolvableApiException
-                    resolvableApiException.startResolutionForResult(this@MainActivity, REQUEST_CHECK_SETTINGS)
+                // Loop through all the cart items and add their quantities to the total
+                for (cartItemSnapshot in dataSnapshot.children) {
+                    val cartItem = cartItemSnapshot.getValue(CartItems::class.java)
+                    totalCartItems += cartItem?.itemQuantity ?: 0
                 }
-                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                    // Location settings cannot be changed
-                }
-            }
-        }
-    }
-    @Suppress("DEPRECATION")
-    private suspend fun getUserLocation() {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
 
-            return
-        }
-        val location = withContext(Dispatchers.IO) {
-            fusedLocationClient.lastLocation.await()
-        }
-        if (location != null) {
-            val geocoder = Geocoder(this@MainActivity, Locale.getDefault())
-            try {
-                val addresses: List<Address>? =
-                    withContext(Dispatchers.IO) {
-                        geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                    }
-                if (!addresses.isNullOrEmpty()) {
-                    val address = addresses[0]
-                    val addressLine = address.getAddressLine(0)
-                    withContext(Dispatchers.Main) {
-                        binding.txtLocation.text = addressLine
-                        binding.txtLocation.setOnClickListener {
-                            openLocation(addressLine)
-                        }
-                    }
-
+                // Update the badge
+                val menuItemId = R.id.cartFragment
+                if (totalCartItems == 0) {
+                    // If there are no items in the cart, hide the badge
+                    binding.bottomNavigationView.removeBadge(menuItemId)
                 } else {
-                    // Handle the case where no addresses are found (e.g., display an error message)
-                    Log.e("TAG", "No address found")
+                    // If there are items in the cart, show the badge and set its number
+                    val badgeDrawable = binding.bottomNavigationView.getOrCreateBadge(menuItemId)
+                    badgeDrawable.number = totalCartItems
+                    badgeDrawable.isVisible = true
                 }
-
-            } catch (e: IOException) {
-                Log.e("TAG", "Error getting location address: $e")
             }
-        }
-    }
 
-
-    private fun openLocation(location: String) {
-        val uri = Uri.parse("geo:0, 0?q=$location")
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.setPackage("com.google.android.apps.maps")
-        startActivity(intent)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    requestLocationUpdates()
-                }            }
-        }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CHECK_SETTINGS) {
-            if (resultCode == RESULT_OK) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    requestLocationUpdates()
-                }            }
-        }
-    }
-
-    companion object {
-        private const val REQUEST_LOCATION_PERMISSION = 100
-        private const val REQUEST_CHECK_SETTINGS = 200
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle error
+                Log.w(TAG, "Failed to read cart items.", databaseError.toException())
+            }
+        })
     }
 }

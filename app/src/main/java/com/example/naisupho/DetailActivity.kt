@@ -2,6 +2,7 @@ package com.example.naisupho
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -25,14 +26,24 @@ class DetailActivity : AppCompatActivity() {
         itemPrice = intent.getStringExtra("MenuItemPrice")
         itemImage = intent.getStringExtra("MenuItemImage")
         binding.detailItemName.text = itemName
-        binding.detailItemPrice.text = itemPrice
+        binding.detailItemPrice.text = "Price: ￥$itemPrice"
         val uri = Uri.parse(itemImage)
         val itemImageView = binding.DetailItemImage
         Glide.with(this).load(uri).into(itemImageView)
         binding.backBtn.setOnClickListener {
             finish()
         }
-        binding.addtocartbtn.setOnClickListener {
+        binding.decrementBtn.setOnClickListener {
+            val quantity = binding.quantityText.text.toString().toInt()
+            if (quantity > 1) {
+                binding.quantityText.text = (quantity - 1).toString()
+            }
+        }
+        binding.incrementBtn.setOnClickListener {
+            val quantity = binding.quantityText.text.toString().toInt()
+            binding.quantityText.text = (quantity + 1).toString()
+        }
+        binding.addToCartBtn.setOnClickListener {
             addItemToCart()
         }
     }
@@ -40,11 +51,12 @@ class DetailActivity : AppCompatActivity() {
     private fun addItemToCart() {
         val database = FirebaseDatabase.getInstance().reference
         val userId = mAuth.currentUser?.uid ?: ""
+        val quantity = binding.quantityText.text.toString().toInt()
 
-        val cartItem = CartItems(itemName.toString(), itemPrice.toString(), itemImage.toString(),1)
-
+        val cartItem = CartItems(itemName.toString(), itemPrice.toString(), itemImage.toString(), itemQuantity = quantity)
         database.child("Users").child(userId).child("CartItems").push().setValue(cartItem)
             .addOnSuccessListener {
+                finish()
                 Toast.makeText(applicationContext, "Cart Item saved successfully!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {

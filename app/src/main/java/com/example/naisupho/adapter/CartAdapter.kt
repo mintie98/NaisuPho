@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naisupho.databinding.CartItemBinding
+import com.example.naisupho.model.CartInteractionListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,7 +17,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class CartAdapter(private  val context : Context, val cartItems: MutableList<String>, private val CartItemPrice: MutableList<String>, private var CartImage: MutableList<String>, private var CartQuantity: MutableList<Int>) : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
+class CartAdapter(private  val context : Context, val cartItems: MutableList<String>, private val CartItemPrice: MutableList<String>, private var CartImage: MutableList<String>, private var CartQuantity: MutableList<Int>,private val listener: CartInteractionListener) : RecyclerView.Adapter<CartAdapter.CartViewHolder>(){
     private val auth = FirebaseAuth.getInstance()
 
 
@@ -24,7 +25,7 @@ class CartAdapter(private  val context : Context, val cartItems: MutableList<Str
         val database = FirebaseDatabase.getInstance()
         val userId = auth.currentUser?.uid ?: ""
         val carditemnumber = cartItems.size
-        itemQuantities = IntArray(carditemnumber) { 1 }
+        itemQuantities = IntArray(carditemnumber) { CartQuantity[it] }
         cartItemsRef = database.reference.child("Users").child(userId).child("CartItems")
 
     }
@@ -46,7 +47,7 @@ class CartAdapter(private  val context : Context, val cartItems: MutableList<Str
             binding.apply {
                 val quantity = itemQuantities[position]
                 cartItemName.text = cartItems[position]
-                cartItemPrice.text = CartItemPrice[position]
+                cartItemPrice.text = "¥${CartItemPrice[position]}"
                 val uriString = CartImage[position]
                 val uri = Uri.parse(uriString)
                 Glide.with(context).load(uri).into(cartImage)
@@ -72,6 +73,8 @@ class CartAdapter(private  val context : Context, val cartItems: MutableList<Str
             if (CartQuantity[position] < 10) {
                 CartQuantity[position]++
                 binding.cartItemQuantity.text = CartQuantity[position].toString()
+                updateQuantityInFirebase(position, CartQuantity[position])
+                listener.onCartQuantityChanged()
             }
         }
 
@@ -79,6 +82,8 @@ class CartAdapter(private  val context : Context, val cartItems: MutableList<Str
             if (CartQuantity[position] > 1) {
                 CartQuantity[position]--
                 binding.cartItemQuantity.text = CartQuantity[position].toString()
+                updateQuantityInFirebase(position, CartQuantity[position])
+                listener.onCartQuantityChanged()
             }
         }
 
@@ -95,43 +100,13 @@ class CartAdapter(private  val context : Context, val cartItems: MutableList<Str
 
 
             }
-
-
-
-
-
-//
-//            // Remove the item from Firebase
-//            if (itemKey != null) {
-//                cartItemsRef.child(itemKey).removeValue().addOnSuccessListener {
-//                    // On successful deletion from Firebase, remove the item from the local lists
-//
-//            }
-
-//            val keyToDelete = cartItemRef.child(cartItems[position]).key
-//           Toast.makeText(context, "$keyToDelete deleted", Toast.LENGTH_SHORT).show()
-
-//
-//            cartItemRef.child(keyToDelete!!).removeValue().addOnSuccessListener {
-//                notifyDataSetChanged()
-//                Toast.makeText(context, "$keyToDelete deleted", Toast.LENGTH_SHORT).show()
-//            }.addOnFailureListener {
-//                Toast.makeText(context, "not delete", Toast.LENGTH_SHORT).show()
-//            }
-
-            // Rest of the deletion process (local list, UI update)
-//            cartItems.removeAt(position)
-//            CartImage.removeAt(position)
-//            CartItemPrice.removeAt(position)
-//            CartDescription.removeAt(position)
-//            CartQuantity.removeAt(position)
-//            notifyItemRemoved(position)
-//            notifyItemRangeChanged(position, cartItems.size)
-//            cartItems.removeAt(position)
-//            CartImage.removeAt(position)
-//            CartItemPrice.removeAt(position)
-//            notifyItemRemoved(position)
-//            notifyItemRangeChanged(position, cartItems.size)
+        }
+        private fun updateQuantityInFirebase(position: Int, quantity: Int) {
+            getUniqueKeyAtPosition(position) { uniqueKey ->
+                if (uniqueKey != null) {
+                    cartItemsRef.child(uniqueKey).child("itemQuantity").setValue(quantity)
+                }
+            }
         }
     }
 
@@ -190,10 +165,9 @@ class CartAdapter(private  val context : Context, val cartItems: MutableList<Str
         }
     }
 
-    public fun getUpdatedQuantity() : MutableList<Int>
-    {
-        val itemQuanitity = mutableListOf<Int>()
-        itemQuanitity.addAll(CartQuantity)
-        return itemQuanitity
+    public fun getUpdatedQuantity() : MutableList<Int> {
+        CartQuantity.clear()
+        CartQuantity.addAll(itemQuantities.toList())
+        return CartQuantity
     }
 }

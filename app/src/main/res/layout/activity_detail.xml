@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".DetailActivity">
 
+    <!-- Back button -->
     <ImageButton
         android:id="@+id/backBtn"
         android:layout_width="30dp"
@@ -18,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_left" />
 
+    <!-- Item name -->
     <TextView
         android:id="@+id/detailItemName"
         android:layout_width="wrap_content"
@@ -26,11 +28,13 @@
         android:fontFamily="@font/yeonsung_regular"
         android:text="FoodName"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backBtn" />
 
+    <!-- Item image -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView4"
         android:layout_width="0dp"
@@ -45,36 +49,94 @@
 
         <ImageView
             android:id="@+id/DetailItemImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
     </androidx.cardview.widget.CardView>
 
+    <!-- Item price -->
     <TextView
         android:id="@+id/detailItemPrice"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="@+id/cardView4"
-        app:layout_constraintStart_toStartOf="@+id/cardView4"
-        app:layout_constraintTop_toBottomOf="@+id/cardView4" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/addtocartbtn"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/addtocartshape"
-        android:fontFamily="@font/yeonsung_regular"
-        android:text="Add To Cart"
-        android:textColor="@color/white"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
+    <!-- Item description -->
+    <TextView
+        android:id="@+id/detailItemDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="Item Description goes here..."
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailItemPrice" />
+
+    <!-- Quantity selector and Add to Cart button -->
+    <LinearLayout
+        android:id="@+id/quantityAddToCartLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Quantity selector -->
+        <LinearLayout
+            android:id="@+id/quantityLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/decrementBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/addtocartshape"
+                android:src="@drawable/minus" />
+
+            <TextView
+                android:id="@+id/quantityText"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/incrementBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/addtocartshape"
+                android:src="@drawable/plus" />
+        </LinearLayout>
+
+        <!-- Add to cart button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addToCartBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/addtocartshape"
+            android:text="Add To Cart"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
