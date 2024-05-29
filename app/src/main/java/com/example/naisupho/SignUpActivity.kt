@@ -1,5 +1,6 @@
 package com.example.naisupho
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -10,7 +11,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.naisupho.databinding.ActivitySignUpBinding
-import com.example.wavesoffood.SharedPreference.ProfileSavedPreferences
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class SignUpActivity : AppCompatActivity() {
@@ -36,12 +38,13 @@ class SignUpActivity : AppCompatActivity() {
     //private lateinit var ggSignUpBtn : Button
     lateinit var mGoogleSignInClient: GoogleSignInClient
     val Req_Code: Int = 123
-
+    private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         FirebaseApp.initializeApp(this)
+        database = FirebaseDatabase.getInstance().reference
 
         btnSignUp = binding.createButton
         edtEmail = binding.edtEmail
@@ -104,20 +107,42 @@ class SignUpActivity : AppCompatActivity() {
     private fun handleResult(task: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = task.getResult(ApiException::class.java)
-            if (account!= null){
-                UpdateUI(account)
+            if (account != null) {
+                val name = account.displayName
+                val email = account.email
+                val photoUrl = account.photoUrl?.toString()
+                firebaseAuthWithGoogle(account.idToken!!, name, email, photoUrl)
             }
-        } catch (e: ApiException){
+        } catch (e: ApiException) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
+    }
 
+    private fun firebaseAuthWithGoogle(idToken: String, name: String?, email: String?, photoUrl: String?) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val userId = auth.currentUser?.uid
+                    if (userId != null) {
+                        database.child("Users").child(userId).child("name").setValue(name)
+                        database.child("Users").child(userId).child("email").setValue(email)
+                        if (photoUrl != null) {
+                            database.child("Users").child(userId).child("photoUrl").setValue(photoUrl)
+                        }                    }
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                }
+            }
     }
 
     private fun UpdateUI(account: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                saveDetailsToSharedPreference(account.displayName.toString(),account.email.toString())
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -125,19 +150,12 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveDetailsToSharedPreference(name : String , email : String)
-    {
-        ProfileSavedPreferences.setName(this, name)
-        ProfileSavedPreferences.setEmail(this, email)
-    }
 
     private fun signUpUser() {
         val email = edtEmail.text.toString()
         val pass = edtPass.text.toString()
         val rePass = edtRePass.text.toString()
         val name = edtName.text.toString()
-
-        Log.d("min", "Email: $email, Password: $pass, Name: $name")
 
         // check if fields are blank
         if (email.isBlank() || pass.isBlank() || name.isBlank()) {
@@ -152,13 +170,18 @@ class SignUpActivity : AppCompatActivity() {
 
         auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
-                Toast.makeText(this, "Successfully Signed Up", Toast.LENGTH_SHORT).show()
-                saveDetailsToSharedPreference(name,email)
-                startActivity(Intent(this@SignUpActivity, MainActivity::class.java))
+                val userId = auth.currentUser?.uid
+                if (userId != null) {
+                    database.child("Users").child(userId).child("name").setValue(name)
+                }
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
             } else {
-                val errorMessage = task.exception?.message ?: "Unknown error occurred"
-                Toast.makeText(this, "Sign Up Failed: $errorMessage", Toast.LENGTH_SHORT).show()
-                Log.e("min", "Sign Up Failed: $errorMessage")
+                // If sign in fails, display a message to the user.
+                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.LENGTH_SHORT).show()
             }
         }
     }

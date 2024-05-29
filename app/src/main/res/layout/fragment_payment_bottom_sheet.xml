@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <!-- Header Section -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/close_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_close" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Add New Card"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <!-- Encryption Info -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="All data is encrypted"
+        android:textColor="@android:color/holo_green_dark"
+        android:gravity="center_horizontal"
+        android:padding="4dp" />
+
+    <!-- Credit and Debit Cards Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_jcb" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_visa"
+            android:layout_marginStart="8dp" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_mastercard"
+            android:layout_marginStart="8dp" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_amex"
+            android:layout_marginStart="8dp" />
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_dinner"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <!-- Card Input Fields -->
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Card Number"
+        android:inputType="number"
+        android:padding="12dp"
+        android:background="@drawable/edittextshape"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="MM/YY"
+        android:inputType="date"
+        android:padding="12dp"
+        android:background="@drawable/edittextshape"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="CVV"
+        android:inputType="number"
+        android:padding="12dp"
+        android:background="@drawable/edittextshape"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Address Section -->
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Billing Address"
+        android:inputType="text"
+        android:padding="12dp"
+        android:background="@drawable/edittextshape"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Add Card Button -->
+    <Button
+        android:id="@+id/add_card_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Card"
+        android:backgroundTint="@color/red"
+        android:textColor="@android:color/white" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Naisupho Protects Your Card Information"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Naisu Pho handles card information in accordance with PCI DSS (Payment Card Industry Data Security Standard). Your card information is safe and will not be leaked. Naisu Pho will never sell your card information."
+        android:textSize="14sp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Security Logos Section -->
+
+    <!-- Security and Reliability Info -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Security and High Reliability"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your security is our top priority. To protect your safety, we use market-leading risk and fraud prevention systems for all transactions. Need help with security issues?"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Contact Info -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contact Us"
+        android:textSize="14sp"
+        android:textColor="@android:color/holo_blue_dark" />
+
+</LinearLayout>

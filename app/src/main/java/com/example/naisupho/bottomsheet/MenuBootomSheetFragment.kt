@@ -1,12 +1,10 @@
-package com.example.naisupho
+package com.example.naisupho.bottomsheet
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.naisupho.adapter.MenuAdapter
 import com.example.naisupho.databinding.FragmentMenuBootomSheetBinding
 import com.example.naisupho.model.MenuItem
@@ -17,14 +15,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MenuBootomSheetFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MenuBootomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentMenuBootomSheetBinding
 

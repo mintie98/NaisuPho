@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="country_codes">
+        <item>JP +81</item>
+        <item>US +1</item>
+        <item>CN +86</item>
+        <item>IN +91</item>
+        <item>GB +44</item>
+        <item>DE +49</item>
+        <item>FR +33</item>
+        <item>IT +39</item>
+        <item>ES +34</item>
+        <item>CA +1</item>
+        <item>AU +61</item>
+        <item>BR +55</item>
+        <item>RU +7</item>
+        <item>KR +82</item>
+        <item>MX +52</item>
+        <item>ID +62</item>
+        <item>TR +90</item>
+        <item>NG +234</item>
+        <item>SA +966</item>
+        <item>ZA +27</item>
+    </string-array>
+</resources>

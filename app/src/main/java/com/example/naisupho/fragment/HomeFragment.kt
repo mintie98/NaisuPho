@@ -14,12 +14,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.example.naisupho.MenuBootomSheetFragment
+import com.example.naisupho.bottomsheet.MenuBootomSheetFragment
+import com.example.naisupho.NotificationActivity
 import com.example.naisupho.R
+import com.example.naisupho.SearchActivity
 import com.example.naisupho.adapter.NearMeAdapter
 import com.example.naisupho.databinding.FragmentHomeBinding
 import com.example.naisupho.model.MenuItem
@@ -61,6 +64,25 @@ class HomeFragment : Fragment() {
             val bottomSheetDialog = MenuBootomSheetFragment()
             bottomSheetDialog.show(parentFragmentManager, "Test")
         }
+        binding.notificationButton.setOnClickListener {
+            val intent = Intent(activity, NotificationActivity::class.java)
+            startActivity(intent)
+        }
+        checkLocationPermissionAndRequestUpdates()
+//        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                // Người dùng đã nhấn "submit" trên bàn phím, bạn có thể mở SearchActivity ở đây
+//                val intent = Intent(activity, SearchActivity::class.java)
+//                startActivity(intent)
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                // Người dùng đã thay đổi văn bản trong SearchView, bạn có thể xử lý sự kiện này nếu muốn
+//                return true
+//            }
+//        })
+
         return binding.root
     }
 
@@ -69,8 +91,12 @@ class HomeFragment : Fragment() {
         setupImageSlider()
         fetchMenuItems()
         setupLocation()
+        //when user want to check location
         binding.location.setOnClickListener {
             checkLocationPermissionAndRequestUpdates()
+        }
+        binding.searchView.setOnSearchClickListener {
+            Log.d("SearchView", "SearchView clicked")
         }
     }
     fun setupLocation(){

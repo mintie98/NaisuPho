@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".MenuBootomSheetFragment">
+    tools:context=".bottomsheet.MenuBootomSheetFragment">
 
     <ImageButton
         android:id="@+id/buttonBack"

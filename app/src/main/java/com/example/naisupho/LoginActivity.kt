@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.naisupho.databinding.ActivityLoginBinding
-import com.example.wavesoffood.SharedPreference.ProfileSavedPreferences
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -21,6 +20,11 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+
 
 
 class LoginActivity : AppCompatActivity() {
@@ -33,6 +37,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
     private lateinit var  mGoogleSignInClient: GoogleSignInClient
     private val Req_Code : Int = 333
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().reference
         FirebaseApp.initializeApp(this)
         binding.loginButton.setOnClickListener{
             email = binding.edtEmail.toString()
@@ -79,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso)
+
     }
     private fun loginUser(){
         auth.signInWithEmailAndPassword(email,password)
@@ -123,7 +130,19 @@ class LoginActivity : AppCompatActivity() {
         val credential = GoogleAuthProvider.getCredential(account.idToken,null)
         auth.signInWithCredential(credential).addOnCompleteListener{task ->
             if (task.isSuccessful){
-                saveDetailsToSharedPreference(account.displayName.toString(),account.email.toString())
+                val currentUser = auth.currentUser
+                if (currentUser != null) {
+                    // Check if user data already exists in Firebase Database
+                    database.child("Users").child(currentUser.uid).get().addOnSuccessListener {
+                        if (!it.exists()) {
+                            // If user data does not exist, save the new user data
+                            database.child("Users").child(currentUser.uid).child("photoUrl")
+                                .setValue(account.photoUrl.toString())
+                            database.child("Users").child(currentUser.uid).child("name")
+                                .setValue(account.displayName)
+                        }
+                    }
+                }
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -131,11 +150,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveDetailsToSharedPreference(name : String , email : String)
-    {
-        ProfileSavedPreferences.setName(this, name)
-        ProfileSavedPreferences.setEmail(this, email)
-    }
 
     override fun onStart() {
         super.onStart()

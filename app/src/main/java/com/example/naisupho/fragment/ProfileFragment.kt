@@ -1,60 +1,120 @@
 package com.example.naisupho.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.example.naisupho.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.example.naisupho.databinding.FragmentProfileBinding
+import com.example.naisupho.AddressActivity
+import com.example.naisupho.CouponActivity
+import com.example.naisupho.EditInfoActivity
+import com.example.naisupho.PaymentActivity
+import com.example.naisupho.ReviewActivity
+import com.example.naisupho.SettingActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var database: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().reference
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        val currentUser = auth.currentUser
+
+        if (currentUser != null) {
+            database.child("Users").child(currentUser.uid).child("name")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val userName = dataSnapshot.getValue(String::class.java)
+                        binding.userName.text = userName
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Handle error
+                    }
+                })
+
+            database.child("Users").child(currentUser.uid).child("photoUrl")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val photoUrl = dataSnapshot.getValue(String::class.java)
+                        if (photoUrl != null && isAdded) {
+                            // Use the photo URL from Firebase
+                            Glide.with(this@ProfileFragment)
+                                .load(photoUrl)
+                                .into(binding.userImage)
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Handle error
+                    }
+                })
+        }
+
+        // Set an OnClickListener for the userEmail and userImage
+        val clickListener = View.OnClickListener {
+            val intent = Intent(activity, EditInfoActivity::class.java)
+            startActivity(intent)
+        }
+        binding.userName.setOnClickListener(clickListener)
+        binding.userImage.setOnClickListener(clickListener)
+        //setting button
+        binding.settingsIcon.setOnClickListener {
+            val intent = Intent(requireActivity(), SettingActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
+
+        // Change Address
+        binding.address.setOnClickListener {
+            val intent = Intent(requireActivity(), AddressActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
+        binding.payment.setOnClickListener {
+            val intent = Intent(requireActivity(), PaymentActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
+
+        // Coupons button
+        binding.coupon.setOnClickListener {
+            val intent = Intent(requireActivity(), CouponActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
+
+        // Review button
+        binding.reviews.setOnClickListener {
+            val intent = Intent(requireActivity(), ReviewActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
+
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = ProfileFragment()
     }
 }
