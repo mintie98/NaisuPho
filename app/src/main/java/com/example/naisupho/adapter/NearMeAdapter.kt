@@ -1,58 +1,58 @@
 package com.example.naisupho.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.naisupho.DetailActivity
 import com.example.naisupho.R
 import com.example.naisupho.databinding.NearMeItemBinding
+import com.example.naisupho.model.Stores
+import com.example.naisupho.repository.TravelTimeRepository
+import dagger.hilt.android.qualifiers.ActivityContext
+import javax.inject.Inject
 
-class NearMeAdapter(private val itemsName:List<String>, private val itemPrice:List<String>, private val itemImage:List<String>, private val storeName:List<String>, private val rate:List<String>, private val distance: List<String>, private val requireContext: Context): RecyclerView.Adapter<NearMeAdapter.NearMeViewHolder>() {
-    inner class NearMeViewHolder (private val binding: NearMeItemBinding) : RecyclerView.ViewHolder(binding.root){
+class NearMeAdapter(
+    private val storesList: List<Stores>,
+    private val requireContext: Context,
+    //private val userLocation: String?,
+    private var travelTimes: Map<String, String> = emptyMap()  // Thêm travelTimes vào adapter
+) : RecyclerView.Adapter<NearMeAdapter.NearMeViewHolder>() {
 
-        fun bind(item: String,price: String, images: String,store:String,rate:String,distance:String,context: Context) {
-            binding.itemName.text = item
-            val formattedPrice = context.getString(R.string.price_format, price.toInt())
-            binding.price.text = formattedPrice
+    inner class NearMeViewHolder(private val binding: NearMeItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-            binding.rate.text= rate
-            binding.storeName.text = store
-            binding.txtLoca.text = context.getString(R.string.distance_format, distance)
-            val uri = Uri.parse(images)
-            Glide.with(context).load(uri).into(binding.pImageName)
+        fun bind(store: Stores, context: Context) {
+            binding.storeNameTextView.text = store.storeName
+            binding.storeAddressTextView.text = store.storeAddress
+
+            val travelTime = travelTimes[store.storeId]
+            binding.txtTime.text = travelTime ?: "N/A"
+
+            val photoUrl = store.storePhotoUrl
+            if (!photoUrl.isNullOrEmpty()) {
+                val uri = Uri.parse(photoUrl)
+                Glide.with(context).load(uri).into(binding.storeImageView)
+            } else {
+                binding.storeImageView.setImageResource(R.drawable.ic_loading)
+            }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NearMeAdapter.NearMeViewHolder {
-        return NearMeViewHolder(NearMeItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NearMeViewHolder {
+        return NearMeViewHolder(NearMeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    override fun onBindViewHolder(holder: NearMeAdapter.NearMeViewHolder, position: Int) {
-        val item = itemsName[position]
-        val images = itemImage[position]
-        val price = itemPrice[position]
-        val storeName = storeName[position]
-        val rate  = rate[position]
-        val distance  = distance[position]
-        holder.bind(item,price,images, storeName,rate,distance, requireContext)
-        holder.itemView.setOnClickListener {
-            val intent = Intent( requireContext, DetailActivity::class.java)
-            intent.putExtra("MenuItemName", item)
-            intent.putExtra("MenuItemImage", images)
-            intent.putExtra("MenuItemPrice", price)
-            intent.putExtra("StoreName", storeName)
-            intent.putExtra("Rate", rate)
-            intent.putExtra("Distance", distance)
-
-            requireContext.startActivity(intent)
-        }
+    override fun onBindViewHolder(holder: NearMeViewHolder, position: Int) {
+        holder.bind(storesList[position], requireContext)
     }
 
     override fun getItemCount(): Int {
-        return itemsName.size
+        return storesList.size
+    }
+
+    fun updateTravelTimes(newTravelTimes: Map<String, String>) {
+        travelTimes = newTravelTimes
+        notifyDataSetChanged()  // Cập nhật lại UI khi có thay đổi
     }
 }

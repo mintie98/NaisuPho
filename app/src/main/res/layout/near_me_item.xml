@@ -17,44 +17,59 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="20dp"
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/pImageName"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
+                android:id="@+id/storeImageView"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:scaleType="center" />
-            <TextView
-                android:id="@+id/itemName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"/>
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:layout_gravity="start">
 
                 <ImageView
                     android:id="@+id/storeIcon"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@drawable/storeicon"
                     android:layout_alignParentStart="true"/>
                 <TextView
-                    android:id="@+id/storeName"
+                    android:id="@+id/storeNameTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:textSize="11sp"
+                    android:layout_height="30dp"
+                    android:textSize="18sp"
                     android:layout_toEndOf="@id/storeIcon"
+                    android:layout_marginStart="8dp"
+                    android:gravity="center_vertical"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="start">
+
+                <ImageView
+                    android:id="@+id/storeAddressIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/loca_icon"
+                    android:layout_alignParentStart="true"/>
+                <TextView
+                    android:id="@+id/storeAddressTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:textSize="16sp"
+                    android:layout_toEndOf="@id/storeAddressIcon"
                     android:layout_marginStart="8dp"
                     android:gravity="center_vertical"/>
 
@@ -69,35 +84,37 @@
 
                 <ImageView
                     android:id="@+id/star"
-                    android:layout_width="12dp"
-                    android:layout_height="12dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/star"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"/>
 
                 <TextView
-                    android:id="@+id/rate"
+                    android:id="@+id/storeRateTextView"
                     android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="11sp"
+                    android:layout_height="30dp"
+                    android:textSize="16sp"
                     android:layout_toEndOf="@id/star"
                     android:layout_marginStart="2dp"
                     android:gravity="center_vertical"/>
 
                 <ImageView
-                    android:id="@+id/loca"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/location"
-                    android:layout_toStartOf="@id/txtLoca"
+                    android:id="@+id/time"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_watch"
+                    android:layout_toStartOf="@id/txtTime"
                     android:gravity="center_vertical"
                     android:layout_centerVertical="true"/>
 
                 <TextView
-                    android:id="@+id/txtLoca"
+                    android:id="@+id/txtTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="11sp"
+                    android:textSize="16sp"
+                    android:layout_marginStart="2dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginEnd="6dp"
                     android:layout_alignParentEnd="true"/>
             </RelativeLayout>

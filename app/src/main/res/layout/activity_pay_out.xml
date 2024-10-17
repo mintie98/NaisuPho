@@ -2,9 +2,230 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PayOutActivity">
+
+    <!-- Header -->
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/arrow_left" />
+
+    <!-- Address Section -->
+
+    <TextView
+        android:id="@+id/checkout_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="4dp"
+        android:text="Thanh toán"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/back_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/address_section"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkout_title">
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/location"
+            android:drawablePadding="8dp"
+            android:text="5-chome-6-7 Tsukamoto, 205\nYodogawa Ward, Osaka"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/delivery_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/location"
+            android:drawablePadding="8dp"
+            android:text="Gặp ở cửa nhà\nThêm hướng dẫn giao hàng"
+            android:textSize="14sp"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <!-- Delivery Options -->
+    <TextView
+        android:id="@+id/delivery_options_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Tùy chọn giao hàng"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/address_section" />
+
+    <RadioGroup
+        android:id="@+id/delivery_options"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delivery_options_title">
+
+        <RadioButton
+            android:id="@+id/priority_delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ưu tiên\n10-15 phút • +200 ¥"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/standard_delivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiêu chuẩn\n10-20 phút"
+            android:textSize="16sp"
+            android:checked="true" />
+    </RadioGroup>
+
+    <!-- Order Summary -->
+    <TextView
+        android:id="@+id/order_summary_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Tóm tắt đơn hàng"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/delivery_options" />
+
+    <LinearLayout
+        android:id="@+id/order_summary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/order_summary_title">
+
+        <TextView
+            android:id="@+id/restaurant_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/storeicon"
+            android:drawablePadding="8dp"
+            android:text="マクドナルド十三西口店 McDonald's JUSO NISHIGUCHI"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/order_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 món\nYêu cầu đồ dùng, ống hút, v.v."
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Payment Summary -->
+    <TextView
+        android:id="@+id/payment_summary_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Thanh toán"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/order_summary" />
+
+    <LinearLayout
+        android:id="@+id/payment_summary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/payment_summary_title">
+
+        <TextView
+            android:id="@+id/total_cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng cước: 640 ¥"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/small_order_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đơn hàng nhỏ: 150 ¥"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/service_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dịch vụ: 77 ¥"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/delivery_fee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giao hàng: 300 ¥"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng cộng: 1,167 ¥"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/payment_method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_visa"
+            android:drawablePadding="8dp"
+            android:text="MasterCard ....4163"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Terms and Conditions -->
+    <TextView
+        android:id="@+id/terms_and_conditions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Điều khoản: Bằng cách nhấp vào nút đặt hàng, bạn thừa nhận rằng bạn đã đọc và đồng ý với các chính sách quyền riêng tư và điều khoản sử dụng của Uber Điều khoản sử dụng"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/payment_summary" />
+
+    <!-- Confirm Button -->
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Tiếp"
+        android:backgroundTint="@color/red"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/terms_and_conditions"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

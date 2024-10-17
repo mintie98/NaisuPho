@@ -1,107 +1,85 @@
 package com.example.naisupho.bottomsheet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.naisupho.adapter.MenuAdapter
 import com.example.naisupho.databinding.FragmentMenuBootomSheetBinding
 import com.example.naisupho.model.MenuItem
+import com.example.naisupho.model.Stores
+import com.example.naisupho.viewmodel.MenuViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint
 class MenuBootomSheetFragment : BottomSheetDialogFragment() {
+
     private lateinit var binding: FragmentMenuBootomSheetBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-    private lateinit var database: FirebaseDatabase
-    private lateinit var itemName : MutableList<String>
-    private lateinit var itemPrice: MutableList<String>
-    private lateinit var itemImage: MutableList<String>
-    private lateinit var storeName: MutableList<String>
-    private lateinit var rate: MutableList<String>
-    private lateinit var distance: MutableList<String>
-
+    private val menuViewModel: MenuViewModel by viewModels()
+    private var userLocation: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMenuBootomSheetBinding.inflate(inflater, container, false)
-        fetchMenuItems()
-        binding.buttonBack.setOnClickListener {
-            dismiss()
-        }
 
+        // Lấy dữ liệu userLocation từ arguments
+        userLocation = arguments?.getString("userLocation")
+
+        setupBackButton()
+        observeViewModel()
+        menuViewModel.fetchMenuItems() // Lấy dữ liệu món ăn
+        menuViewModel.fetchStores() // Lấy dữ liệu cửa hàng
         return binding.root
     }
 
-    private fun fetchMenuItems() {
-        database = FirebaseDatabase.getInstance()
-        val itemRef: DatabaseReference = database.reference.child("menuItems")
-
-        itemName = mutableListOf()
-        itemPrice= mutableListOf()
-        storeName = mutableListOf()
-        itemImage= mutableListOf()
-        rate = mutableListOf()
-        distance = mutableListOf()
-        itemRef.addListenerForSingleValueEvent(object : ValueEventListener {
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Loop through each food item
-                for (foodSnapshot in dataSnapshot.children) {
-                    // Get the FoodItem object from the child node
-                    val menuItem = foodSnapshot.getValue(MenuItem::class.java)
-
-                    // Add the foodname to the foodNames list
-                    menuItem?.itemName?.let {
-                        itemName.add(it)
-                    }
-                    menuItem?.itemPrice?.let {
-                        itemPrice.add(it.toString())
-                    }
-                    menuItem?.itemImage?.let {
-                        itemImage.add(it)
-                    }
-                    menuItem?.rate?.let {
-                        rate.add(it.toString())
-                    }
-                    menuItem?.distance?.let {
-                        distance.add(it.toString())
-                    }
-                    menuItem?.storeName?.let {
-                        storeName.add(it)
-                    }
-
-                }
-
-                setAdapter()
-
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Handle errors here if any
-                println("Error: ${databaseError.message}")
-            }
-        })
+    private fun setupBackButton() {
+        binding.buttonBack.setOnClickListener { dismiss() }
     }
 
-    private fun setAdapter() {
-        val adapter = MenuAdapter(itemName,itemPrice,itemImage,storeName,rate,distance,requireContext())
-        binding.menuRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
+    private fun observeViewModel() {
+        // Quan sát dữ liệu món ăn
+        menuViewModel.menuItems.observe(viewLifecycleOwner) { menuItems ->
+            val stores = menuViewModel.stores.value ?: emptyMap()
+            setAdapter(menuItems, stores)
+        }
+
+        // Quan sát dữ liệu cửa hàng
+        menuViewModel.stores.observe(viewLifecycleOwner) { stores ->
+            val menuItems = menuViewModel.menuItems.value ?: emptyList()
+            setAdapter(menuItems, stores)
+        }
+    }
+
+
+    private fun setAdapter(menuItems: List<MenuItem>, stores: Map<String, Stores>) {
+        val adapter = MenuAdapter(
+            menuItems,
+            stores,
+            requireContext(),
+            userLocation
+        ) { userLoc, storeLoc, callback ->
+            // Sử dụng ViewModel để tính thời gian di chuyển
+            menuViewModel.fetchTravelTime(userLoc, storeLoc, callback)
+        }
+        binding.menuRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.menuRecyclerView.adapter = adapter
     }
 
     companion object {
-
+        // Hàm newInstance để tạo fragment với tham số userLocation
+        fun newInstance(userLocation: String): MenuBootomSheetFragment {
+            val fragment = MenuBootomSheetFragment()
+            val args = Bundle()
+            args.putString("userLocation", userLocation)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

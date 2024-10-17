@@ -1,4 +1,4 @@
-package com.example.naisupho.model
+package com.example.naisupho.interfaces
 
 interface CartInteractionListener {
     fun onCartQuantityChanged()

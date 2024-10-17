@@ -3,17 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/arrow_left" />
 
-    <EditText
-        android:id="@+id/search_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/back_button"
         android:layout_toRightOf="@id/back_button"
-        android:hint="Search" />
+        android:background="@drawable/serachshape"
+        android:hint="Search"
+        android:iconifiedByDefault="false"
+        android:queryBackground="@android:color/transparent"
+        android:queryHint="What do you want to order?"
+        android:searchIcon="@drawable/search" />
 
 </RelativeLayout>

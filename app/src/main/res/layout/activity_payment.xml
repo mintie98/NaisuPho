@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/back_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:src="@drawable/arrow_left" />

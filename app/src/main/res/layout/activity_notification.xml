@@ -15,8 +15,8 @@
         app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:id="@+id/backButton"
-            android:layout_width="24sp"
-            android:layout_height="24sp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@drawable/arrow_left"
             android:layout_marginStart="5dp"
             android:layout_centerVertical="true"/>

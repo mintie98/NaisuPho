@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naisupho.databinding.CartItemBinding
-import com.example.naisupho.model.CartInteractionListener
+import com.example.naisupho.interfaces.CartInteractionListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

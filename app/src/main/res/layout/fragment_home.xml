@@ -16,19 +16,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-    <SearchView
+    <TextView
         android:id="@+id/searchView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="46dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/serachshape"
-        android:iconifiedByDefault="false"
-        android:queryBackground="@android:color/transparent"
-        android:queryHint="What do you want to order?"
-        android:searchIcon="@drawable/search"
+        android:drawableLeft="@drawable/search"
+        android:drawablePadding="8dp"
+        android:padding="10dp"
+        android:text="What do you want to order?"
+        android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/notificationButton"/>
 
     <ImageView
         android:id="@+id/notificationButton"

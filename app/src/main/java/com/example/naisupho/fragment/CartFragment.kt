@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.naisupho.PayOutActivity
 import com.example.naisupho.adapter.CartAdapter
 import com.example.naisupho.databinding.FragmentCartBinding
-import com.example.naisupho.model.CartInteractionListener
+import com.example.naisupho.interfaces.CartInteractionListener
 import com.example.naisupho.model.CartItems
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
