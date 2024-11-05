@@ -1,5 +1,6 @@
 package com.example.naisupho.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.naisupho.model.MenuItem
 import com.example.naisupho.model.Stores
 import com.example.naisupho.repository.TravelTimeRepository
+import com.example.naisupho.utils.StringUtils
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
@@ -23,6 +25,10 @@ class MenuViewModel @Inject constructor(
     private val _menuItems = MutableLiveData<List<MenuItem>>()
     val menuItems: LiveData<List<MenuItem>> get() = _menuItems
 
+    private val _filteredMenuItems = MutableLiveData<List<MenuItem>>()
+    val filteredMenuItems: LiveData<List<MenuItem>> get() = _filteredMenuItems
+
+
     private val _stores = MutableLiveData<Map<String, Stores>>()
     val stores: LiveData<Map<String, Stores>> get() = _stores
 
@@ -37,6 +43,8 @@ class MenuViewModel @Inject constructor(
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val menuItemsList = mutableListOf<MenuItem>()
                 for (categorySnapshot in dataSnapshot.children) {
+                    //val categoryId = categorySnapshot.key
+                    //Log.d("MenuViewModel", "DataSnapshot: $categoryId")
                     val itemsSnapshot = categorySnapshot.child("items")
                     for (itemSnapshot in itemsSnapshot.children) {
                         val menuItem = itemSnapshot.toMenuItem()
@@ -44,6 +52,7 @@ class MenuViewModel @Inject constructor(
                     }
                 }
                 _menuItems.value = menuItemsList
+                Log.d("MenuViewModel", "Loaded menu items: $menuItemsList")
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -73,6 +82,28 @@ class MenuViewModel @Inject constructor(
         })
     }
 
+
+    fun filterMenuItemsByCategory(categoryId: String) {
+        Log.d("MenuViewModel", "Current menu items: ${_menuItems.value}")
+        val filteredItems = _menuItems.value?.filter {
+            Log.d("MenuViewModel", "Checking item: ${it.itemName}, categoryId: ${it.categoryId}")
+            it.categoryId == categoryId
+        } ?: emptyList()
+        Log.d("MenuViewModel", "Filtered items: $filteredItems")
+        _filteredMenuItems.value = filteredItems
+    }
+    fun searchMenuItems(query: String) {
+        val normalizedQuery = StringUtils.removeVietnameseAccents(query).lowercase()
+        val filteredItems = _menuItems.value?.filter {
+            val itemName = it.itemName ?: ""
+            val normalizedItemName = StringUtils.removeVietnameseAccents(itemName).lowercase()
+            Log.d("MenuViewModel", "Comparing: '$normalizedItemName' with query: '$normalizedQuery'")
+            normalizedItemName.contains(normalizedQuery)
+        } ?: emptyList()
+        _filteredMenuItems.value = filteredItems
+        Log.d("MenuViewModel", "Search results for '$query': $filteredItems")
+    }
+
     // Extension function to convert DataSnapshot to MenuItem
     private fun DataSnapshot.toMenuItem(): MenuItem? {
         val itemName = child("item_name").getValue(String::class.java)
@@ -80,9 +111,12 @@ class MenuViewModel @Inject constructor(
         val itemImage = child("item_image").getValue(String::class.java)
         val itemPrice = child("item_price").getValue(Int::class.java)
         val storeId = child("store_id").getValue(String::class.java)
+        val categoryId = this.ref.parent?.parent?.key
+        Log.d("MenuViewModel", "DataSnapshot: $categoryId")
 
         return if (itemName != null && itemImage != null && itemPrice != null && storeId != null) {
             MenuItem(
+                categoryId = categoryId,
                 itemName = itemName,
                 itemDetail = itemDetail ?: "",
                 itemImage = itemImage,
@@ -99,7 +133,7 @@ class MenuViewModel @Inject constructor(
         val storeName = child("store_name").getValue(String::class.java)
         val storeAddress = child("store_address").getValue(String::class.java)
         val storePhotoUrl = child("store_photoUrl").getValue(String::class.java)
-        val storeRate = child("store_rate").getValue(Double::class.java)
+        val storeRate = child("store_rate").getValue(Float::class.java)
         val storePostcode = child("store_postcode").getValue(Int::class.java)
 
         return if (storeName != null && storeAddress != null && storePhotoUrl != null && storeRate != null && storePostcode != null) {

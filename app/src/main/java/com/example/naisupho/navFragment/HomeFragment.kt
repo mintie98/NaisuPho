@@ -1,4 +1,4 @@
-package com.example.naisupho.fragment
+package com.example.naisupho.navFragment
 
 import android.os.Bundle
 import android.util.Log
@@ -77,7 +77,12 @@ class HomeFragment : Fragment() {
         }
 
         binding.searchView.setOnClickListener {
-            startActivity(Intent(activity, SearchActivity::class.java))
+            val intent = Intent(activity, SearchActivity::class.java)
+            // Truyền userLocation vào Intent
+            userLocation?.let { location ->
+                intent.putExtra("USER_LOCATION", location)
+            }
+            startActivity(intent)
         }
 
         binding.location.setOnClickListener {

@@ -3,9 +3,7 @@ package com.example.naisupho.adapter
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -49,7 +47,8 @@ class MenuAdapter(
                 val intent = Intent(requireContext, DetailActivity::class.java)
                 intent.putExtra("MenuItemName", menuItems[position].itemName)
                 intent.putExtra("MenuItemImage", menuItems[position].itemImage)
-                intent.putExtra("MenuItemPrice", menuItems[position].itemPrice)
+                intent.putExtra("MenuItemPrice", menuItems[position].itemPrice ?: 0)
+                intent.putExtra("MenuItemDetail", menuItems[position].itemDetail)
                 requireContext.startActivity(intent)
             }
         }

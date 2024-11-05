@@ -21,7 +21,7 @@ class StoreRepository @Inject constructor(
                     val storeName = storeSnapshot.child("store_name").getValue(String::class.java)
                     val storeAddress = storeSnapshot.child("store_address").getValue(String::class.java)
                     val storePhotoUrl = storeSnapshot.child("store_photoUrl").getValue(String::class.java)
-                    val storeRate = storeSnapshot.child("store_rate").getValue(Double::class.java)
+                    val storeRate = storeSnapshot.child("store_rate").getValue(Float::class.java)
                     val storePostcode = storeSnapshot.child("store_postcode").getValue(Int::class.java)
                     if (storeName != null && storeAddress != null && storePhotoUrl != null && storeRate != null && storePostcode != null) {
                         val store = Stores(

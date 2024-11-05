@@ -7,9 +7,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
+import javax.inject.Named
 
 class TravelTimeRepository @Inject constructor(
-    private val retrofitClient: RetrofitClient,
+    @Named("GoogleClient")private val retrofitClient: RetrofitClient,
     private val apiKey: String // API Key được tiêm từ Hilt
 ) {
     fun getTravelTime(userLocation: String, storeLocation: String, callback: (String?) -> Unit) {

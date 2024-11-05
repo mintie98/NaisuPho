@@ -7,6 +7,5 @@ import dagger.hilt.android.HiltAndroidApp
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        val DistanceMatrixApi = "API"
     }
 }

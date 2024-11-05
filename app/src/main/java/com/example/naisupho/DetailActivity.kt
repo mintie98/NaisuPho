@@ -15,18 +15,22 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var binding : ActivityDetailBinding
     private lateinit var mAuth: FirebaseAuth
     private var itemName : String? = null
-    private var itemPrice : String? = null
+    private var itemPrice : Int? = null
     private var itemImage : String? = null
+    private var itemDetail : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         mAuth = FirebaseAuth.getInstance()
         itemName = intent.getStringExtra("MenuItemName")
-        itemPrice = intent.getStringExtra("MenuItemPrice")
+        itemPrice = intent.getIntExtra("MenuItemPrice", 0)
         itemImage = intent.getStringExtra("MenuItemImage")
+        itemDetail = intent.getStringExtra("MenuItemDetail")
+
         binding.detailItemName.text = itemName
         binding.detailItemPrice.text = "Price: ￥$itemPrice"
+        binding.detailItemDescription.text = itemDetail
         val uri = Uri.parse(itemImage)
         val itemImageView = binding.DetailItemImage
         Glide.with(this).load(uri).into(itemImageView)
@@ -53,11 +57,21 @@ class DetailActivity : AppCompatActivity() {
         val userId = mAuth.currentUser?.uid ?: ""
         val quantity = binding.quantityText.text.toString().toInt()
 
-        val cartItem = CartItems(itemName.toString(), itemPrice.toString(), itemImage.toString(), itemQuantity = quantity)
-        database.child("Users").child(userId).child("CartItems").push().setValue(cartItem)
+        // Tạo đối tượng CartItems với thông tin cần lưu
+        val cartItem = CartItems(
+            itemName = itemName,
+            itemPrice = itemPrice,
+            itemImage = itemImage,
+            itemQuantity = quantity
+        )
+
+        // Lưu vào nhánh CartItems của người dùng
+        val cartRef = database.child("CartItems").child(userId).push()
+
+        cartRef.setValue(cartItem)
             .addOnSuccessListener {
-                finish()
                 Toast.makeText(applicationContext, "Cart Item saved successfully!", Toast.LENGTH_SHORT).show()
+                finish()
             }
             .addOnFailureListener {
                 Toast.makeText(applicationContext, "Failed to save Cart Item", Toast.LENGTH_SHORT).show()

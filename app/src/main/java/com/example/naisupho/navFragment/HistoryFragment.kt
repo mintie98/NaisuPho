@@ -1,4 +1,4 @@
-package com.example.naisupho.fragment
+package com.example.naisupho.navFragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

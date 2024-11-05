@@ -7,5 +7,5 @@ data class Stores(
     val storeName: String? = null,
     val storePhotoUrl: String? = null,
     val storePostcode: Int? = null,
-    val storeRate: Double? = null
+    val storeRate: Float? = null
 )

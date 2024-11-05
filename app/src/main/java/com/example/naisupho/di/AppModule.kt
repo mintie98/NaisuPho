@@ -11,6 +11,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -26,8 +27,8 @@ object AppModule {
     @Provides
     @Singleton
     fun provideTravelTimeRepository(
-        retrofitClient: RetrofitClient,
-        apiKey: String
+        @Named("GoogleClient")retrofitClient: RetrofitClient,
+        @Named("GoogleApiKey")apiKey: String
     ): TravelTimeRepository {
         return TravelTimeRepository(retrofitClient, apiKey)
     }

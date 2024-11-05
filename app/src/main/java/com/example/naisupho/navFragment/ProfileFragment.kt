@@ -1,4 +1,4 @@
-package com.example.naisupho.fragment
+package com.example.naisupho.navFragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,15 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.example.naisupho.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.example.naisupho.databinding.FragmentProfileBinding
-import com.example.naisupho.AddressActivity
-import com.example.naisupho.CouponActivity
-import com.example.naisupho.EditInfoActivity
+import com.example.naisupho.userInfo.AddressActivity
+import com.example.naisupho.userInfo.CouponActivity
+import com.example.naisupho.userInfo.EditInfoActivity
 import com.example.naisupho.PaymentActivity
-import com.example.naisupho.ReviewActivity
+import com.example.naisupho.userInfo.ReviewActivity
 import com.example.naisupho.SettingActivity
 
 class ProfileFragment : Fragment() {

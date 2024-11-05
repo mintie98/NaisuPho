@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@drawable/proceedbutonshape"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/store_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/pho" />
+
+        <TextView
+            android:id="@+id/store_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/store_image"
+            android:text="Tên cửa hàng"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingStart="8dp" />
+
+        <TextView
+            android:id="@+id/order_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/store_name"
+            android:layout_toEndOf="@id/store_image"
+            android:text="Số lượng món • Tổng giá tiền"
+            android:textSize="14sp"
+            android:paddingStart="8dp" />
+
+        <TextView
+            android:id="@+id/delivery_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_info"
+            android:layout_toEndOf="@id/store_image"
+            android:text="Giao hàng đến địa chỉ"
+            android:textSize="14sp"
+            android:paddingStart="8dp" />
+
+        <Button
+            android:id="@+id/view_cart_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/delivery_address"
+            android:layout_marginTop="8dp"
+            android:text="Xem giỏ hàng"
+            android:backgroundTint="@color/red"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/view_store_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_cart_button"
+            android:layout_marginTop="4dp"
+            android:text="Xem cửa hàng"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

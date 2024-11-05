@@ -8,224 +8,296 @@
 
     <!-- Header -->
     <ImageView
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imgBackButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/arrow_left" />
+        android:src="@drawable/arrow_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <!-- Address Section -->
-
+    <!-- Checkout Title -->
     <TextView
-        android:id="@+id/checkout_title"
+        android:id="@+id/tvCheckoutTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="124dp"
-        android:layout_marginTop="4dp"
-        android:text="Thanh toán"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Payment"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/back_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Address Section -->
     <LinearLayout
-        android:id="@+id/address_section"
+        android:id="@+id/sectionAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/checkout_title">
+        app:layout_constraintTop_toBottomOf="@id/tvCheckoutTitle">
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/location"
-            android:drawablePadding="8dp"
-            android:text="5-chome-6-7 Tsukamoto, 205\nYodogawa Ward, Osaka"
-            android:textSize="16sp" />
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground">
 
-        <TextView
-            android:id="@+id/delivery_instructions"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/location"
+                android:drawablePadding="8dp"
+                android:text="5-chome-6-7 Tsukamoto, 205\nYodogawa Ward, Osaka"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imgAddressNextArrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_next" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/location"
-            android:drawablePadding="8dp"
-            android:text="Gặp ở cửa nhà\nThêm hướng dẫn giao hàng"
-            android:textSize="14sp"
-            android:textColor="@color/black" />
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/tvPhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_phone"
+                android:drawablePadding="8dp"
+                android:text="0123456789"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imgPhoneNextArrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_next" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_watch"
+                android:drawablePadding="8dp"
+                android:text="Delivery Time"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvDeliveryTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:text="10-15 mins" />
+        </RelativeLayout>
     </LinearLayout>
 
-    <!-- Delivery Options -->
+    <!-- Payment Options -->
     <TextView
-        android:id="@+id/delivery_options_title"
+        android:id="@+id/tvPaymentOptionsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Tùy chọn giao hàng"
+        android:layout_marginStart="5dp"
+        android:text="Payment Method"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/address_section" />
+        app:layout_constraintTop_toBottomOf="@id/sectionAddress" />
 
-    <RadioGroup
-        android:id="@+id/delivery_options"
-        android:layout_width="0dp"
+    <RelativeLayout
+        android:id="@+id/layoutPaymentOptions"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/delivery_options_title">
-
-        <RadioButton
-            android:id="@+id/priority_delivery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ưu tiên\n10-15 phút • +200 ¥"
-            android:textSize="16sp" />
-
-        <RadioButton
-            android:id="@+id/standard_delivery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tiêu chuẩn\n10-20 phút"
-            android:textSize="16sp"
-            android:checked="true" />
-    </RadioGroup>
-
-    <!-- Order Summary -->
-    <TextView
-        android:id="@+id/order_summary_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Tóm tắt đơn hàng"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/delivery_options" />
-
-    <LinearLayout
-        android:id="@+id/order_summary"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/order_summary_title">
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toBottomOf="@+id/tvPaymentOptionsTitle">
 
         <TextView
-            android:id="@+id/restaurant_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/storeicon"
-            android:drawablePadding="8dp"
-            android:text="マクドナルド十三西口店 McDonald's JUSO NISHIGUCHI"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/order_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1 món\nYêu cầu đồ dùng, ống hút, v.v."
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <!-- Payment Summary -->
-    <TextView
-        android:id="@+id/payment_summary_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Thanh toán"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/order_summary" />
-
-    <LinearLayout
-        android:id="@+id/payment_summary"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/payment_summary_title">
-
-        <TextView
-            android:id="@+id/total_cost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tổng cước: 640 ¥"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/small_order_fee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đơn hàng nhỏ: 150 ¥"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/service_fee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dịch vụ: 77 ¥"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/delivery_fee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Giao hàng: 300 ¥"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/total_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tổng cộng: 1,167 ¥"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/payment_method"
+            android:id="@+id/tvPaymentMethod"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_visa"
             android:drawablePadding="8dp"
             android:text="MasterCard ....4163"
             android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/imgPaymentNextArrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_next" />
+    </RelativeLayout>
+
+    <!-- Order Summary -->
+    <TextView
+        android:id="@+id/tvOrderSummaryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="5dp"
+        android:text="Order Summary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutPaymentOptions" />
+
+    <LinearLayout
+        android:id="@+id/layoutOrderSummary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvOrderSummaryTitle">
+
+        <RelativeLayout
+            android:id="@+id/layoutStore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/tvRestaurantName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/storeicon"
+                android:drawablePadding="8dp"
+                android:text="NaisuPho"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imgStoreArrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_down" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutCoupon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/tvCouponCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_coupon"
+                android:drawablePadding="8dp"
+                android:text="Add Discount Code"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imgCouponNextArrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_next" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- Payment Summary -->
+    <TextView
+        android:id="@+id/tvPaymentSummaryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Payment Summary"
+        android:layout_marginStart="5dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutOrderSummary" />
+
+    <LinearLayout
+        android:id="@+id/layoutPaymentSummary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="5dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPaymentSummaryTitle">
+
+        <TextView
+            android:id="@+id/tvTotalCost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Cost: 640 ¥"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvDiscount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discount: 300 ¥"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvDeliveryFee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery Fee: 300 ¥"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvTotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: 1,167 ¥"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- Terms and Conditions -->
     <TextView
-        android:id="@+id/terms_and_conditions"
+        android:id="@+id/tvTermsAndConditions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Điều khoản: Bằng cách nhấp vào nút đặt hàng, bạn thừa nhận rằng bạn đã đọc và đồng ý với các chính sách quyền riêng tư và điều khoản sử dụng của Uber Điều khoản sử dụng"
+        android:text="Terms: By placing an order, you acknowledge that you have read and agree to NaisuPho’s privacy policy and terms of use."
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/payment_summary" />
+        app:layout_constraintTop_toBottomOf="@id/layoutPaymentSummary" />
 
     <!-- Confirm Button -->
     <Button
-        android:id="@+id/confirm_button"
+        android:id="@+id/btnConfirmOrder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Tiếp"
+        android:text="Place Order"
         android:backgroundTint="@color/red"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/terms_and_conditions"/>
-
+        app:layout_constraintTop_toBottomOf="@+id/tvTermsAndConditions"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

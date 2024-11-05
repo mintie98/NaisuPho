@@ -1,4 +1,4 @@
-package com.example.naisupho
+package com.example.naisupho.userInfo
 
 import android.net.Uri
 import android.os.Bundle

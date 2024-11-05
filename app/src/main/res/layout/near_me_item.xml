@@ -45,6 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:textSize="18sp"
+                    android:textStyle="bold"
                     android:layout_toEndOf="@id/storeIcon"
                     android:layout_marginStart="8dp"
                     android:gravity="center_vertical"/>
