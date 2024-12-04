@@ -31,8 +31,9 @@ class AddressActivity : AppCompatActivity() {
         userRef.get().addOnSuccessListener { snapshot ->
             val userName = snapshot.getValue(String::class.java) ?: "Unknown User"
             setupRecyclerView(userName)
+            observeViewModel()
         }
-        observeViewModel()
+
         binding.backButton.setOnClickListener { finish() }
 
         binding.addNewAddressButton.setOnClickListener {

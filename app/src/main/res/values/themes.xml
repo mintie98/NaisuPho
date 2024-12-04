@@ -2,7 +2,12 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.NaisuPho" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Màu cho thanh trạng thái và nền -->
+        <item name="android:statusBarColor">@color/your_background_color</item>
+        <item name="android:colorBackground">@color/your_background_color</item>
+
+        <!-- Nếu màu nền là sáng thì đặt windowLightStatusBar là true -->
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.NaisuPho" parent="Base.Theme.NaisuPho" />

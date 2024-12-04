@@ -49,6 +49,7 @@ class MenuAdapter(
                 intent.putExtra("MenuItemImage", menuItems[position].itemImage)
                 intent.putExtra("MenuItemPrice", menuItems[position].itemPrice ?: 0)
                 intent.putExtra("MenuItemDetail", menuItems[position].itemDetail)
+                intent.putExtra("StoreId", menuItems[position].storeId)
                 requireContext.startActivity(intent)
             }
         }

@@ -13,9 +13,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/more_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="More options"
+            android:src="@drawable/ic_more" />
+
+        <ImageView
             android:id="@+id/store_image"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/pho" />
 
         <TextView
@@ -29,12 +39,21 @@
             android:paddingStart="8dp" />
 
         <TextView
-            android:id="@+id/order_info"
+            android:id="@+id/order_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/store_name"
             android:layout_toEndOf="@id/store_image"
-            android:text="Số lượng món • Tổng giá tiền"
+            android:text="Số lượng món"
+            android:textSize="14sp"
+            android:paddingStart="8dp" />
+        <TextView
+            android:id="@+id/total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/order_quantity"
+            android:layout_toEndOf="@id/store_image"
+            android:text="Tổng giá tiền"
             android:textSize="14sp"
             android:paddingStart="8dp" />
 
@@ -42,7 +61,7 @@
             android:id="@+id/delivery_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/order_info"
+            android:layout_below="@id/total_price"
             android:layout_toEndOf="@id/store_image"
             android:text="Giao hàng đến địa chỉ"
             android:textSize="14sp"
@@ -65,7 +84,7 @@
             android:layout_below="@id/view_cart_button"
             android:layout_marginTop="4dp"
             android:text="Xem cửa hàng"
-            android:backgroundTint="@color/white"
+            android:backgroundTint="@color/grey"
             android:textColor="@color/black" />
     </RelativeLayout>
 

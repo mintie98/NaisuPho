@@ -45,15 +45,15 @@ class SearchActivity : AppCompatActivity() {
     private fun setupCategoryRecyclerView() {
         // Dummy data for categories
         val categories = listOf(
-            Category("category_id1", "Noodle Soup", R.drawable.pho),
-            Category("category_id2", "Rice dishes", R.drawable.pho),
-            Category("category_id3", "Bánh Mì", R.drawable.pho),
-//            Category("category_id4", "Soup&Congees", R.drawable.pho),
-//            Category("category_id5", "Wraps&rolls", R.drawable.pho),
-//            Category("category_id6", "Bánh", R.drawable.pho),
-//            Category("category_id7", "Meat dishes", R.drawable.pho),
-//            Category("category_id8", "Seafood dishes", R.drawable.pho),
-//            Category("category_id9", "Salads", R.drawable.pho),
+            Category("category_id1", "Noodle Soup", R.drawable.iconpho),
+            Category("category_id2", "Rice dishes", R.drawable.iconcom),
+            Category("category_id3", "Bánh Mì", R.drawable.iconbanhmi),
+            Category("category_id4", "Bánh", R.drawable.iconbanhxeo),
+            Category("category_id5", "Wraps&rolls", R.drawable.icongoicuon),
+            Category("category_id6", "Gỏi", R.drawable.icongoi),
+            Category("category_id7", "Desserts", R.drawable.iconche),
+            Category("category_id8", "Other", R.drawable.icondaonia)
+ //           Category("category_id9", "Salads", R.drawable.pho),
 //            Category("category_id10", "Desserts", R.drawable.pho)
         )
 

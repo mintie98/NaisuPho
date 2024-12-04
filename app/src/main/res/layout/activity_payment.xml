@@ -24,93 +24,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Payment"
+            android:text="Phương thức thanh toán"
             android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <!-- Encryption Info -->
-    <TextView
+    <!-- RecyclerView for dynamic payment methods -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/payment_methods_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="All data is encrypted"
-        android:textColor="@android:color/holo_green_dark"
-        android:gravity="center_horizontal"
-        android:padding="4dp" />
+        android:paddingTop="16dp" />
 
-    <!-- Credit and Debit Cards Section -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Credit and Debit Cards"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="177dp"
-        android:layout_marginBottom="8dp"
-        android:src="@drawable/mastercardic" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Saving the card will shorten the payment time"
-        android:textSize="14sp"
-        android:gravity="center_horizontal" />
-
-    <Button
-        android:id="@+id/add_card_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Add Card"
-        android:backgroundTint="@color/red"
-        android:textColor="@android:color/white" />
-
-    <!-- Supported Cards -->
+    <!-- Button to add a new payment method -->
     <LinearLayout
+        android:id="@+id/add_payment_method"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="16dp">
+        android:paddingVertical="12dp"
+        android:layout_marginTop="10dp"
+        android:background="?android:attr/selectableItemBackground">
 
         <ImageView
-            android:layout_width="40dp"
+            android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_jcb" />
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_visa"
-            android:layout_marginStart="8dp" />
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_mastercard"
-            android:layout_marginStart="8dp" />
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_amex"
-            android:layout_marginStart="8dp" />
+            android:src="@drawable/plus"
+            android:contentDescription="Thêm phương thức thanh toán" />
 
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_dinner" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Thêm phương thức thanh toán"
+            android:textSize="16sp" />
     </LinearLayout>
-
-    <!-- Contact Info -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Contact Us"
-        android:textSize="14sp"
-        android:textColor="@android:color/holo_blue_dark" />
 </LinearLayout>

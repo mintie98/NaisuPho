@@ -1,14 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".navFragment.HistoryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TextView hiển thị khi không có giao dịch -->
     <TextView
+        android:id="@+id/tvNoTransactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="No transactions available"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="gone" />
+
+    <!-- RecyclerView hiển thị danh sách giao dịch -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTransactionHistory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:padding="8dp" />
 
 </FrameLayout>

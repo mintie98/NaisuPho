@@ -23,6 +23,7 @@ import com.example.naisupho.R
 import com.example.naisupho.SearchActivity
 import com.example.naisupho.adapter.NearMeAdapter
 import com.example.naisupho.databinding.FragmentHomeBinding
+import com.example.naisupho.di.MyApp
 import com.example.naisupho.model.Stores
 import com.example.naisupho.viewmodel.HomeViewModel
 import com.google.android.gms.common.api.ApiException
@@ -142,6 +143,7 @@ class HomeFragment : Fragment() {
                 Log.d("HomeFragment", "User location: $locationString")
                 viewModel.updateUserLocation(locationString) // Cập nhật vào ViewModel
                 userLocation = locationString
+                (requireActivity().application as MyApp).userLocation = locationString
                 updateUIWithLocation(it.latitude, it.longitude)
             }
         }

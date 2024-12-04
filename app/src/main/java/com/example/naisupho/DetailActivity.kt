@@ -18,6 +18,7 @@ class DetailActivity : AppCompatActivity() {
     private var itemPrice : Int? = null
     private var itemImage : String? = null
     private var itemDetail : String? = null
+    private var storeId : String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
@@ -27,6 +28,8 @@ class DetailActivity : AppCompatActivity() {
         itemPrice = intent.getIntExtra("MenuItemPrice", 0)
         itemImage = intent.getStringExtra("MenuItemImage")
         itemDetail = intent.getStringExtra("MenuItemDetail")
+        storeId = intent.getStringExtra("StoreId")
+
 
         binding.detailItemName.text = itemName
         binding.detailItemPrice.text = "Price: ￥$itemPrice"
@@ -66,7 +69,7 @@ class DetailActivity : AppCompatActivity() {
         )
 
         // Lưu vào nhánh CartItems của người dùng
-        val cartRef = database.child("CartItems").child(userId).push()
+        val cartRef = database.child("CartItems").child(userId).child(storeId.toString()).push()
 
         cartRef.setValue(cartItem)
             .addOnSuccessListener {

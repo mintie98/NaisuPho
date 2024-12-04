@@ -1,5 +1,6 @@
 package com.example.naisupho.di
 
+import com.example.naisupho.BuildConfig
 import com.example.naisupho.interfaces.RetrofitClient
 import com.example.naisupho.interfaces.ZipcloudApiService
 import dagger.Module
@@ -23,6 +24,7 @@ object NetworkModule {
         return OkHttpClient.Builder().build()
     }
 
+
     // Cấu hình OkHttpClient cho Zipcloud với API key
     @Provides
     @Singleton
@@ -33,6 +35,7 @@ object NetworkModule {
     }
 
     // Cấu hình Retrofit cho Google API
+    //Google Matrix API
     @Provides
     @Singleton
     @Named("GoogleRetrofit")
@@ -57,6 +60,7 @@ object NetworkModule {
     }
 
     // Tạo RetrofitClient cho Google API
+    //anotation
     @Provides
     @Singleton
     @Named("GoogleClient")
@@ -75,7 +79,6 @@ object NetworkModule {
     // Cung cấp API key cho Google API
     @Provides
     @Named("GoogleApiKey")
-    fun provideGoogleApiKey(): String {
-        return "YOUR_GOOGLE_API_KEY"
-    }
+    fun provideGoogleApiKey(): String = BuildConfig.GOOGLE_Martrix_API
+
 }

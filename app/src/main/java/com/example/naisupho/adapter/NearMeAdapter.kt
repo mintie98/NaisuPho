@@ -20,7 +20,6 @@ import javax.inject.Inject
 class NearMeAdapter(
     private val storesList: List<Stores>,
     private val requireContext: Context,
-    //private val userLocation: String?,
     private var travelTimes: Map<String, String> = emptyMap()  // Thêm travelTimes vào adapter
 ) : RecyclerView.Adapter<NearMeAdapter.NearMeViewHolder>() {
 
@@ -34,11 +33,6 @@ class NearMeAdapter(
                 }
                 val intent = Intent(requireContext, StoreActivity::class.java)
                 intent.putExtra("StoreId", storesList[position].storeId)
-                intent.putExtra("StoreName", storesList[position].storeName)
-                intent.putExtra("StoreAddress", storesList[position].storeAddress)
-                intent.putExtra("StorePhotoUrl", storesList[position].storePhotoUrl)
-                intent.putExtra("MoveTime", travelTimes[storesList[position].storeId])
-                intent.putExtra("Rate", storesList[position].storeRate.toString())
 
                 requireContext.startActivity(intent)
             }

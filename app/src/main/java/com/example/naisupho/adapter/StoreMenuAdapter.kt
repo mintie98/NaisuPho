@@ -56,6 +56,7 @@ class StoreMenuAdapter(
                     putExtra("MenuItemImage", menuItem.itemImage)
                     putExtra("MenuItemPrice", menuItem.itemPrice)
                     putExtra("MenuItemDetail", menuItem.itemDetail)
+                    putExtra("StoreId", menuItem.storeId)
                 }
                 context.startActivity(intent)
             }

@@ -40,39 +40,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateCartItemCount() {
-        // Get the current user's ID
         val userId = mAuth.currentUser?.uid ?: return
 
-        // Reference to the user's cart items in the separate "CartItems" node
         val cartItemsRef = FirebaseDatabase.getInstance().reference.child("CartItems").child(userId)
 
-        // Listen for changes in the cart items
         cartItemsRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Reset the total cart items count
-                totalCartItems = 0
+                // Đếm số lượng nhóm hàng StoreCartItem trong giỏ hàng
+                val storeCartItemCount = dataSnapshot.childrenCount.toInt()
 
-                // Loop through all the cart items and add their quantities to the total
-                for (cartItemSnapshot in dataSnapshot.children) {
-                    val cartItem = cartItemSnapshot.getValue(CartItems::class.java)
-                    totalCartItems += cartItem?.itemQuantity ?: 0
-                }
-
-                // Update the badge
+                // Cập nhật badge trên bottom navigation view
                 val menuItemId = R.id.cartFragment
-                if (totalCartItems == 0) {
-                    // If there are no items in the cart, hide the badge
+                if (storeCartItemCount == 0) {
                     binding.bottomNavigationView.removeBadge(menuItemId)
                 } else {
-                    // If there are items in the cart, show the badge and set its number
                     val badgeDrawable = binding.bottomNavigationView.getOrCreateBadge(menuItemId)
-                    badgeDrawable.number = totalCartItems
+                    badgeDrawable.number = storeCartItemCount
                     badgeDrawable.isVisible = true
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                // Handle error
                 Log.w(TAG, "Failed to read cart items.", databaseError.toException())
             }
         })
