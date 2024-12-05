@@ -181,6 +181,9 @@ class HomeFragment : Fragment() {
         viewModel.stores.observe(viewLifecycleOwner) { storesList ->
             setAdapter(storesList)
         }
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
 
         viewModel.travelTimes.observe(viewLifecycleOwner) { travelTimes ->
             // Khi thời gian di chuyển được tính toán xong, cập nhật UI tại đây

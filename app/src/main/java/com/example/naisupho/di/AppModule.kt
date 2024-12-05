@@ -4,6 +4,7 @@ import com.example.naisupho.interfaces.RetrofitClient
 import com.example.naisupho.repository.StoreRepository
 import com.example.naisupho.repository.TravelTimeRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -48,4 +49,10 @@ object AppModule {
     @Provides
     @Singleton
     fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
+
+    @Provides
+    @Singleton
+    fun provideDatabaseReference(): DatabaseReference = FirebaseDatabase.getInstance().reference
+
+
 }

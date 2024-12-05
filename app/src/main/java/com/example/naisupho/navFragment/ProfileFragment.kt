@@ -16,25 +16,26 @@ import com.example.naisupho.userInfo.EditInfoActivity
 import com.example.naisupho.PaymentActivity
 import com.example.naisupho.userInfo.ReviewActivity
 import com.example.naisupho.SettingActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
-    private lateinit var database: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+
+    @Inject
+    lateinit var auth: FirebaseAuth
+
+    @Inject
+    lateinit var database: DatabaseReference
+
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance().reference
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        val view = binding.root
 
         val currentUser = auth.currentUser
 
@@ -56,7 +57,6 @@ class ProfileFragment : Fragment() {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val photoUrl = dataSnapshot.getValue(String::class.java)
                         if (photoUrl != null && isAdded) {
-                            // Use the photo URL from Firebase
                             Glide.with(this@ProfileFragment)
                                 .load(photoUrl)
                                 .into(binding.userImage)
@@ -76,7 +76,8 @@ class ProfileFragment : Fragment() {
         }
         binding.userName.setOnClickListener(clickListener)
         binding.userImage.setOnClickListener(clickListener)
-        //setting button
+
+        // Setting button
         binding.settingsIcon.setOnClickListener {
             val intent = Intent(requireActivity(), SettingActivity::class.java)
             requireActivity().startActivity(intent)

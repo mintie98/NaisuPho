@@ -22,11 +22,15 @@ class HistoryViewModel @Inject constructor(
         val userId = firebaseAuth.currentUser?.uid ?: return
         val transactionsRef = firebaseDatabase.getReference("transactions/$userId")
 
-        transactionsRef.get().addOnSuccessListener { snapshot ->
-            val transactions = snapshot.children.mapNotNull {
-                it.getValue(Transaction::class.java)
+        transactionsRef.get()
+            .addOnSuccessListener { snapshot ->
+                val transactions = snapshot.children.mapNotNull {
+                    it.getValue(Transaction::class.java)
+                }
+                _transactionList.value = transactions
             }
-            _transactionList.value = transactions
-        }
+            .addOnFailureListener {
+                _transactionList.value = emptyList() // handle error
+            }
     }
 }

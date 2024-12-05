@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Spinner
-import com.example.naisupho.R
+import com.example.naisupho.databinding.ActivityAddPhoneBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class AddPhoneBottomSheet : BottomSheetDialogFragment() {
+
+    private var _binding: ActivityAddPhoneBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     private var listener: AddPhoneListener? = null
 
@@ -26,27 +25,28 @@ class AddPhoneBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.activity_add_phone_bottom_sheet, container, false)
+    ): View {
+        _binding = ActivityAddPhoneBottomSheetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val closeButton = view.findViewById<ImageView>(R.id.close_icon)
-        val countryCodeSpinner = view.findViewById<Spinner>(R.id.country_code_spinner)
-        val phoneNumberEditText = view.findViewById<EditText>(R.id.phone_number_edit_text)
-        val sendButton = view.findViewById<Button>(R.id.send_button)
-
-        sendButton.setOnClickListener {
-            val countryCode = countryCodeSpinner.selectedItem.toString()
-            val phoneNumber = phoneNumberEditText.text.toString()
+        binding.sendButton.setOnClickListener {
+            val countryCode = binding.countryCodeSpinner.selectedItem.toString()
+            val phoneNumber = binding.phoneNumberEditText.text.toString()
             listener?.onSend(countryCode, phoneNumber)
             dismiss()
         }
 
-        closeButton.setOnClickListener {
+        binding.closeIcon.setOnClickListener {
             dismiss()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

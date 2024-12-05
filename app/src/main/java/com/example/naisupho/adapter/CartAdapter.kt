@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naisupho.CartDetailActivity
+import com.example.naisupho.R
 import com.example.naisupho.StoreActivity
 import com.example.naisupho.databinding.CartItemStoreBinding
 import com.example.naisupho.model.StoreCartItem
@@ -33,6 +34,8 @@ class CartAdapter(
 
             Glide.with(context)
                 .load(storeCartItem.storeImage)
+                .placeholder(R.drawable.ic_loading)
+                .error(R.drawable.pho)
                 .into(binding.storeImage)
 
             binding.viewCartButton.setOnClickListener {

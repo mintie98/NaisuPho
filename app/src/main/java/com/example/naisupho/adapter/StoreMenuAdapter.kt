@@ -44,7 +44,11 @@ class StoreMenuAdapter(
 
             menuItem.itemImage?.let {
                 val uri = Uri.parse(it)
-                Glide.with(context).load(uri).into(binding.pImageName)
+                Glide.with(context)
+                    .load(uri)
+                    .placeholder(R.drawable.ic_loading)
+                    .error(R.drawable.pho)
+                    .into(binding.pImageName)
             } ?: run {
                 // Nếu `itemImage` bị null, bạn có thể đặt một hình ảnh mặc định hoặc ẩn ImageView
                 binding.pImageName.setImageResource(R.drawable.ic_loading) // Đặt hình ảnh mặc định

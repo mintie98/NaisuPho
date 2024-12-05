@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import com.example.naisupho.R
+import com.example.naisupho.databinding.ActivityEditNameBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class EditNameBottomSheet : BottomSheetDialogFragment() {
+
+    private var _binding: ActivityEditNameBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     private var listener: EditNameListener? = null
 
@@ -25,26 +25,27 @@ class EditNameBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.activity_edit_name_bottom_sheet, container, false)
+    ): View {
+        _binding = ActivityEditNameBottomSheetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val editName = view.findViewById<EditText>(R.id.edit_name)
-        val saveButton = view.findViewById<Button>(R.id.save_button)
-        val closeButton = view.findViewById<ImageView>(R.id.close_icon)
-
-        saveButton.setOnClickListener {
-            val name = editName.text.toString()
+        binding.saveButton.setOnClickListener {
+            val name = binding.editName.text.toString()
             listener?.onSave(name)
             dismiss()
         }
 
-        closeButton.setOnClickListener {
+        binding.closeIcon.setOnClickListener {
             dismiss()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -16,6 +16,10 @@ class HomeViewModel @Inject constructor(
     private val travelTimeRepository: TravelTimeRepository,
     private val repository: StoreRepository
 ) : ViewModel() {
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     private val _userLocation = MutableLiveData<String>()
     val userLocation: LiveData<String> get() = _userLocation
 
@@ -25,12 +29,12 @@ class HomeViewModel @Inject constructor(
     private val _travelTimes = MutableLiveData<Map<String, String>>()
     val travelTimes: LiveData<Map<String, String>> get() = _travelTimes
 
-    // Hàm để cập nhật vị trí người dùng trong ViewModel
+    // Cập nhật vị trí người dùng
     fun updateUserLocation(location: String) {
         _userLocation.value = location
     }
 
-
+    // Lấy thời gian di chuyển đến các cửa hàng
     fun fetchTravelTime(userLocation: String, storeAddress: String, storeId: String) {
         travelTimeRepository.getTravelTime(userLocation, storeAddress) { time ->
             val updatedTravelTimes = _travelTimes.value?.toMutableMap() ?: mutableMapOf()
@@ -39,16 +43,24 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    // Lấy danh sách cửa hàng và cập nhật trạng thái tải
     fun fetchStores(userLocation: String) = viewModelScope.launch {
-        repository.fetchStores { storesList ->
-            _stores.postValue(storesList)
+        _isLoading.postValue(true) // Bắt đầu tải
+        try {
+            repository.fetchStores { storesList ->
+                _stores.postValue(storesList)
 
-            storesList.forEach { store ->
-                Log.d("StoreViewModel", "Store ID: ${store.storeId}, Store Address: ${store.storeAddress}")
-                store.storeId?.let {
-                    fetchTravelTime(userLocation, storeAddress = store.storeAddress ?: "", storeId = it)
+                storesList.forEach { store ->
+                    Log.d("StoreViewModel", "Store ID: ${store.storeId}, Store Address: ${store.storeAddress}")
+                    store.storeId?.let {
+                        fetchTravelTime(userLocation, storeAddress = store.storeAddress ?: "", storeId = it)
+                    }
                 }
             }
+        } catch (e: Exception) {
+            Log.e("HomeViewModel", "Error fetching stores: ${e.message}")
+        } finally {
+            _isLoading.postValue(false) // Kết thúc tải
         }
     }
 }

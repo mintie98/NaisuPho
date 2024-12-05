@@ -62,7 +62,11 @@ class MenuAdapter(
             binding.price.text = formattedPrice
 
             val uri = Uri.parse(menuItem.itemImage)
-            Glide.with(context).load(uri).into(imagesView)
+            Glide.with(context)
+                .load(uri)
+                .placeholder(R.drawable.ic_loading)
+                .error(R.drawable.pho)
+                .into(imagesView)
 
             val store = stores[menuItem.storeId]
             if (store != null) {

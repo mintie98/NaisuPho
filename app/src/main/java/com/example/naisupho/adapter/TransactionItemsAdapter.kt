@@ -1,11 +1,9 @@
 package com.example.naisupho.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.naisupho.R
+import com.example.naisupho.databinding.TransactionItemBinding
 import com.example.naisupho.model.TransactionItem
 
 class TransactionItemsAdapter(
@@ -13,9 +11,12 @@ class TransactionItemsAdapter(
 ) : RecyclerView.Adapter<TransactionItemsAdapter.TransactionItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionItemViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.transaction_item, parent, false)
-        return TransactionItemViewHolder(view)
+        val binding = TransactionItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return TransactionItemViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: TransactionItemViewHolder, position: Int) {
@@ -25,15 +26,14 @@ class TransactionItemsAdapter(
 
     override fun getItemCount() = items.size
 
-    class TransactionItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val itemName: TextView = itemView.findViewById(R.id.tvItemName)
-        private val itemQuantity: TextView = itemView.findViewById(R.id.tvItemQuantity)
-        private val itemPrice: TextView = itemView.findViewById(R.id.tvItemPrice)
+    class TransactionItemViewHolder(
+        private val binding: TransactionItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: TransactionItem) {
-            itemName.text = item.name
-            itemQuantity.text = "x${item.quantity}"
-            itemPrice.text = "￥${item.price}"
+            binding.tvItemName.text = item.name
+            binding.tvItemQuantity.text = "x${item.quantity}"
+            binding.tvItemPrice.text = "￥${item.price}"
         }
     }
 }

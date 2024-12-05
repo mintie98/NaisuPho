@@ -10,6 +10,7 @@ import android.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naisupho.CartDetailActivity
+import com.example.naisupho.R
 import com.example.naisupho.databinding.CartItemBinding
 import com.example.naisupho.model.CartItems
 import com.example.naisupho.viewmodel.CartViewModel
@@ -50,7 +51,11 @@ class CartItemAdapter(
                 cartItemPrice.text = "¥${totalItemPrice}"
                 cartItemQuantity.text = cartItem.itemQuantity.toString()
 
-                Glide.with(context).load(Uri.parse(cartItem.itemImage)).into(cartImage)
+                Glide.with(context)
+                    .load(Uri.parse(cartItem.itemImage))
+                    .placeholder(R.drawable.ic_loading)
+                    .error(R.drawable.pho)
+                    .into(cartImage)
 
                 minusbutton.setOnClickListener {
                     val oldQuantity = cartItem.itemQuantity ?: 1

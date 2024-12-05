@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.example.naisupho.R
+import com.example.naisupho.databinding.ActivitySelectGenderBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SelectGenderBottomSheet : BottomSheetDialogFragment() {
+
+    private var _binding: ActivitySelectGenderBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     private var listener: SelectGenderListener? = null
 
@@ -23,30 +25,36 @@ class SelectGenderBottomSheet : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.activity_select_gender_bottom_sheet, container, false)
+    ): View {
+        _binding = ActivitySelectGenderBottomSheetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.gender_female).setOnClickListener {
+        binding.genderFemale.setOnClickListener {
             listener?.onGenderSelected("Female")
             dismiss()
         }
 
-        view.findViewById<TextView>(R.id.gender_male).setOnClickListener {
+        binding.genderMale.setOnClickListener {
             listener?.onGenderSelected("Male")
             dismiss()
         }
 
-        view.findViewById<TextView>(R.id.gender_not_say).setOnClickListener {
+        binding.genderNotSay.setOnClickListener {
             listener?.onGenderSelected("Other")
             dismiss()
         }
 
-        view.findViewById<TextView>(R.id.cancel).setOnClickListener {
+        binding.cancel.setOnClickListener {
             dismiss()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

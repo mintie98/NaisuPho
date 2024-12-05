@@ -9,54 +9,71 @@ import com.bumptech.glide.Glide
 import com.example.naisupho.databinding.ActivityDetailBinding
 import com.example.naisupho.model.CartItems
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityDetailBinding
-    private lateinit var mAuth: FirebaseAuth
-    private var itemName : String? = null
-    private var itemPrice : Int? = null
-    private var itemImage : String? = null
-    private var itemDetail : String? = null
-    private var storeId : String? = null
+
+    private lateinit var binding: ActivityDetailBinding
+
+    @Inject
+    lateinit var mAuth: FirebaseAuth
+
+    @Inject
+    lateinit var database: DatabaseReference
+
+    private var itemName: String? = null
+    private var itemPrice: Int? = null
+    private var itemImage: String? = null
+    private var itemDetail: String? = null
+    private var storeId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        mAuth = FirebaseAuth.getInstance()
+
         itemName = intent.getStringExtra("MenuItemName")
         itemPrice = intent.getIntExtra("MenuItemPrice", 0)
         itemImage = intent.getStringExtra("MenuItemImage")
         itemDetail = intent.getStringExtra("MenuItemDetail")
         storeId = intent.getStringExtra("StoreId")
 
+        setupUI()
+        setupListeners()
+    }
 
+    private fun setupUI() {
         binding.detailItemName.text = itemName
         binding.detailItemPrice.text = "Price: ￥$itemPrice"
         binding.detailItemDescription.text = itemDetail
+
         val uri = Uri.parse(itemImage)
-        val itemImageView = binding.DetailItemImage
-        Glide.with(this).load(uri).into(itemImageView)
-        binding.backBtn.setOnClickListener {
-            finish()
-        }
+        Glide.with(this).load(uri).into(binding.DetailItemImage)
+    }
+
+    private fun setupListeners() {
+        binding.backBtn.setOnClickListener { finish() }
+
         binding.decrementBtn.setOnClickListener {
             val quantity = binding.quantityText.text.toString().toInt()
             if (quantity > 1) {
                 binding.quantityText.text = (quantity - 1).toString()
             }
         }
+
         binding.incrementBtn.setOnClickListener {
             val quantity = binding.quantityText.text.toString().toInt()
             binding.quantityText.text = (quantity + 1).toString()
         }
-        binding.addToCartBtn.setOnClickListener {
-            addItemToCart()
-        }
+
+        binding.addToCartBtn.setOnClickListener { addItemToCart() }
     }
 
     private fun addItemToCart() {
-        val database = FirebaseDatabase.getInstance().reference
         val userId = mAuth.currentUser?.uid ?: ""
         val quantity = binding.quantityText.text.toString().toInt()
 

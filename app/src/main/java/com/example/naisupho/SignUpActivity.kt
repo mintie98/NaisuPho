@@ -24,75 +24,75 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
-    private val binding : ActivitySignUpBinding by lazy {
+
+    private val binding: ActivitySignUpBinding by lazy {
         ActivitySignUpBinding.inflate(layoutInflater)
     }
-    lateinit var edtEmail: EditText
-    private lateinit var edtPass: EditText
-    private lateinit var edtRePass: EditText
-    private lateinit var edtName: EditText
-    private lateinit var btnSignUp: Button
-    //private lateinit var ggSignUpBtn : Button
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    val Req_Code: Int = 123
-    private lateinit var database: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+
+    @Inject
+    lateinit var auth: FirebaseAuth
+
+    @Inject
+    lateinit var database: DatabaseReference
+
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private val Req_Code: Int = 123
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        FirebaseApp.initializeApp(this)
-        database = FirebaseDatabase.getInstance().reference
 
-        btnSignUp = binding.createButton
-        edtEmail = binding.edtEmail
-        edtPass  = binding.edtPassword
-        edtRePass  = binding.edtRePassword
-        edtName = binding.edtName
-        // Initialising auth object
-        auth = Firebase.auth
+        setupGoogleSignInClient()
+        handleBtnClick()
+    }
+
+    private fun setupGoogleSignInClient() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
-        handleBtnClick()
     }
 
     private fun handleBtnClick() {
-        btnSignUp.setOnClickListener {
+        binding.createButton.setOnClickListener {
             signUpUser()
         }
+
         binding.signin.setOnClickListener {
-            val intent = Intent(this,LoginActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, LoginActivity::class.java))
         }
 
         binding.prvBtn.setOnClickListener {
-            val intent = Intent(this,LoginActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, LoginActivity::class.java))
         }
-        //password toggle visible
 
+        setupPasswordToggle()
+    }
+
+    private fun setupPasswordToggle() {
         var isPasswordVisible = false
         binding.passwordToggle.setOnClickListener {
             isPasswordVisible = !isPasswordVisible
-            val inputType = if (isPasswordVisible){
+            val inputType = if (isPasswordVisible) {
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            }else{
+            } else {
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
             }
-            edtPass.inputType = inputType
-            edtRePass.inputType = inputType
-            edtPass.setSelection(edtPass.text.length)
-            edtRePass.setSelection(edtRePass.text.length)
+            binding.edtPassword.inputType = inputType
+            binding.edtRePassword.inputType = inputType
+            binding.edtPassword.setSelection(binding.edtPassword.text.length)
+            binding.edtRePassword.setSelection(binding.edtRePassword.text.length)
+
             val drawableId = if (isPasswordVisible) R.drawable.eye else R.drawable.eye_hide
             binding.passwordToggle.setImageResource(drawableId)
-
         }
     }
 
@@ -129,7 +129,8 @@ class SignUpActivity : AppCompatActivity() {
                         database.child("Users").child(userId).child("email").setValue(email)
                         if (photoUrl != null) {
                             database.child("Users").child(userId).child("photoUrl").setValue(photoUrl)
-                        }                    }
+                        }
+                    }
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
@@ -139,25 +140,12 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    private fun UpdateUI(account: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        auth.signInWithCredential(credential).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
-    }
-
-
     private fun signUpUser() {
-        val email = edtEmail.text.toString()
-        val pass = edtPass.text.toString()
-        val rePass = edtRePass.text.toString()
-        val name = edtName.text.toString()
+        val email = binding.edtEmail.text.toString()
+        val pass = binding.edtPassword.text.toString()
+        val rePass = binding.edtRePassword.text.toString()
+        val name = binding.edtName.text.toString()
 
-        // check if fields are blank
         if (email.isBlank() || pass.isBlank() || name.isBlank()) {
             Toast.makeText(this, "Please fill all the details", Toast.LENGTH_SHORT).show()
             return
@@ -178,12 +166,9 @@ class SignUpActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                // If sign in fails, display a message to the user.
                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                Toast.makeText(baseContext, "Authentication failed.",
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Authentication failed.", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
 }

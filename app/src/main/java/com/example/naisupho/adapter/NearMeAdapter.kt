@@ -49,7 +49,11 @@ class NearMeAdapter(
             val photoUrl = store.storePhotoUrl
             if (!photoUrl.isNullOrEmpty()) {
                 val uri = Uri.parse(photoUrl)
-                Glide.with(context).load(uri).into(binding.storeImageView)
+                Glide.with(context)
+                    .load(photoUrl)
+                    .placeholder(R.drawable.ic_loading)
+                    .error(R.drawable.pho)
+                    .into(binding.storeImageView)
             } else {
                 binding.storeImageView.setImageResource(R.drawable.ic_loading)
             }
