@@ -1,7 +1,7 @@
 package com.example.naisupho.repository
 
 import android.util.Log
-import com.example.naisupho.interfaces.RetrofitClient
+import com.example.naisupho.interfaces.MatrixApiRetrofitClient
 import com.example.naisupho.interfaces.TravelTimeResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class TravelTimeRepository @Inject constructor(
-    @Named("GoogleClient")private val retrofitClient: RetrofitClient,
+    @Named("GoogleMatrixClient")private val retrofitClient: MatrixApiRetrofitClient,
     private val apiKey: String // API Key được tiêm từ Hilt
 ) {
     fun getTravelTime(userLocation: String, storeLocation: String, callback: (String?) -> Unit) {

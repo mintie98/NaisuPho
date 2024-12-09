@@ -35,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/userImage"
-                android:text="Your Name"
                 android:textSize="18sp"
                 android:textColor="@android:color/black"
                 tools:ignore="HardcodedText" />
@@ -77,7 +76,7 @@
                     android:layout_toEndOf="@id/loca"
                     android:layout_marginStart="8dp"
                     android:layout_centerVertical="true"
-                    android:text="Address"
+                    android:text="@string/profile_address"
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
                     tools:ignore="HardcodedText" />
@@ -112,7 +111,7 @@
                     android:layout_toEndOf="@id/paymentIcon"
                     android:layout_marginStart="8dp"
                     android:layout_centerVertical="true"
-                    android:text="Payment"
+                    android:text="@string/payment_options_title"
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
                     tools:ignore="HardcodedText" />
@@ -145,7 +144,7 @@
                     android:layout_toEndOf="@id/couponIcon"
                     android:layout_marginStart="8dp"
                     android:layout_centerVertical="true"
-                    android:text="Coupon"
+                    android:text="@string/coupon_title"
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
                     tools:ignore="HardcodedText" />
@@ -180,7 +179,7 @@
                     android:layout_toEndOf="@id/reviewsIcon"
                     android:layout_marginStart="8dp"
                     android:layout_centerVertical="true"
-                    android:text="Reviews"
+                    android:text="@string/profile_reviews"
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
                     tools:ignore="HardcodedText" />

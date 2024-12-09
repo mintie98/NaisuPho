@@ -133,7 +133,7 @@
             android:layout_marginStart="16dp"
             android:layout_weight="1"
             android:background="@drawable/addtocartshape"
-            android:text="Add To Cart"
+            android:text="@string/add_to_cart_button"
             android:textColor="@color/white"
             android:textSize="18sp" />
     </LinearLayout>

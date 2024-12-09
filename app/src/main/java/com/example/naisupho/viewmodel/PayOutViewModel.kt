@@ -18,6 +18,10 @@ class PayOutViewModel @Inject constructor() : ViewModel() {
 
     private val _selectedAddress = MutableLiveData<Address?>()
     val selectedAddress: LiveData<Address?> get() = _selectedAddress
+
+    private val _phoneNumber = MutableLiveData<String?>()
+    val phoneNumber: LiveData<String?> get() = _phoneNumber
+
     private val _totalCost = MutableLiveData<Int>()
     val totalCost: LiveData<Int> get() = _totalCost
 
@@ -35,46 +39,106 @@ class PayOutViewModel @Inject constructor() : ViewModel() {
 
     init {
         loadAddresses()
+        fetchPhoneNumber()
         calculateFinalTotal()
         fetchUserAuthorizationId()
     }
 
+    /**
+     * Lấy danh sách địa chỉ từ Firebase Realtime Database
+     */
     private fun loadAddresses() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        if (userId == null) {
-            _addressList.value = emptyList()
-            return
-        }
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         val databaseRef = FirebaseDatabase.getInstance().getReference("Users/$userId/addresses")
         databaseRef.get()
             .addOnSuccessListener { snapshot ->
                 val addressList = snapshot.children.mapNotNull {
                     val address = it.getValue(Address::class.java)
-                    if (address == null) {
-                        Log.e("PayOutViewModel", "Invalid address format: ${it.value}")
-                    }
-                    address
+                    sanitizeAddress(address) // Làm sạch và loại bỏ địa chỉ không hợp lệ
                 }
+
                 _addressList.value = addressList
 
-                // Log để kiểm tra danh sách
-                Log.d("PayOutViewModel", "Address list: $addressList")
+                if (addressList.isNotEmpty()) {
+                    // Chọn địa chỉ mặc định nếu có, ngược lại chọn địa chỉ đầu tiên
+                    _selectedAddress.value = addressList.find { it.default == true } ?: addressList.first()
+                } else {
+                    _selectedAddress.value = null
+                }
 
-                // Chọn địa chỉ mặc định
-                val defaultAddress = addressList.find { it.default == true }
-                _selectedAddress.value = defaultAddress
+                Log.d("PayOutViewModel", "Address list: $addressList")
             }
             .addOnFailureListener {
                 _addressList.value = emptyList()
+                _selectedAddress.value = null
                 Log.e("PayOutViewModel", "Failed to load addresses: ${it.message}")
             }
     }
+    private fun sanitizeAddress(address: Address?): Address? {
+        if (address == null) return null
 
-    fun updateSelectedAddress(address: Address) {
-        _selectedAddress.value = address
+        val postcode = address.postcode?.takeIf { it.isNotBlank() }
+        val address1 = address.address1?.takeIf { it.isNotBlank() }
+        val address2 = address.address2?.takeIf { it.isNotBlank() }
+
+        return if (postcode == null && address1 == null && address2 == null) {
+            null
+        } else {
+            address.copy(
+                postcode = postcode ?: "",
+                address1 = address1 ?: "",
+                address2 = address2 ?: ""
+            )
+        }
     }
 
+    /**
+     * Cập nhật địa chỉ giao hàng đã chọn
+     */
+    fun updateSelectedAddress(address: Address) {
+        _selectedAddress.value = sanitizeAddress(address) ?: Address("", "", "")
+    }
+
+    /**
+     * Lấy số điện thoại từ Firebase Realtime Database
+     */
+    private fun fetchPhoneNumber() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        val phoneRef = FirebaseDatabase.getInstance().getReference("Users/$userId/phoneNumber")
+        phoneRef.get()
+            .addOnSuccessListener { snapshot ->
+                _phoneNumber.value = snapshot.getValue(String::class.java) ?: "No phone number"
+            }
+            .addOnFailureListener {
+                _phoneNumber.value = null
+                Log.e("PayOutViewModel", "Failed to fetch phone number: ${it.message}")
+            }
+    }
+
+    /**
+     * Cập nhật số điện thoại lên Firebase Realtime Database
+     */
+    fun updatePhone(phoneNumber: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        Log.d("PayOutViewModel", "Updating phone number: $phoneNumber")
+        Log.d("PayOutViewModel", "Current user ID: $userId")
+
+        val phoneRef = FirebaseDatabase.getInstance().getReference("Users/$userId/phoneNumber")
+        phoneRef.setValue(phoneNumber) // Trực tiếp dùng phoneNumber đã xác minh
+            .addOnSuccessListener {
+                _phoneNumber.value = phoneNumber
+                Log.d("PayOutViewModel", "Phone number updated successfully: $phoneNumber")
+            }
+            .addOnFailureListener {
+                Log.e("PayOutViewModel", "Failed to update phone number: ${it.message}")
+            }
+    }
+
+    /**
+     * Cập nhật tổng chi phí
+     */
     fun setTotalCost(total: Int) {
         _totalCost.value = total
         calculateFinalTotal()
@@ -94,20 +158,19 @@ class PayOutViewModel @Inject constructor() : ViewModel() {
         val total = (_totalCost.value ?: 0) - (_discount.value ?: 0) + (_deliveryFee.value ?: 0)
         _finalTotal.value = total
     }
+
+    /**
+     * Lấy thông tin xác thực PayPay từ Firebase Realtime Database
+     */
     private fun fetchUserAuthorizationId() {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        if (userId == null) {
-            Log.e("PayOutViewModel", "User not logged in")
-            _userAuthorizationId.value = null
-            return
-        }
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         val databaseRef = FirebaseDatabase.getInstance().getReference("paymentMethods/$userId/methods")
         databaseRef.get()
             .addOnSuccessListener { snapshot ->
                 val userAuthId = snapshot.children
                     .mapNotNull { it.child("userAuthorizationId").value as? String }
-                    .firstOrNull() // Lấy userAuthorizationId đầu tiên (hoặc mặc định)
+                    .firstOrNull()
                 _userAuthorizationId.value = userAuthId
                 Log.d("PayOutViewModel", "Fetched userAuthorizationId: $userAuthId")
             }
@@ -116,4 +179,30 @@ class PayOutViewModel @Inject constructor() : ViewModel() {
                 _userAuthorizationId.value = null
             }
     }
+
+    fun addAddress(newAddress: Address) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val databaseRef = FirebaseDatabase.getInstance().getReference("Users/$userId/addresses")
+        val newAddressRef = databaseRef.push()
+        val addressWithId = newAddress.copy(id = newAddressRef.key ?: "")
+        newAddressRef.setValue(addressWithId).addOnSuccessListener {
+            loadAddresses() // Tải lại danh sách địa chỉ
+        }
+    }
+    fun fetchAddresses() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val databaseRef = FirebaseDatabase.getInstance().getReference("Users/$userId/addresses")
+
+        databaseRef.get().addOnSuccessListener { snapshot ->
+            val addressList = snapshot.children.mapNotNull { it.getValue(Address::class.java) }
+            _addressList.value = addressList
+
+            // Log để kiểm tra danh sách
+            Log.d("PayOutViewModel", "Fetched addresses: $addressList")
+        }.addOnFailureListener { error ->
+            _addressList.value = emptyList()
+            Log.e("PayOutViewModel", "Failed to fetch addresses: ${error.message}")
+        }
+    }
+
 }

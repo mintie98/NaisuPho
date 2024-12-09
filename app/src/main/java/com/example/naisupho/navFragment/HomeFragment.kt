@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.example.naisupho.BaseFragment
 import com.example.naisupho.bottomsheet.MenuBootomSheetFragment
 import com.example.naisupho.NotificationActivity
 import com.example.naisupho.R
@@ -38,7 +39,7 @@ import kotlinx.coroutines.tasks.await
 import java.util.Locale
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var fusedLocationClient: FusedLocationProviderClient

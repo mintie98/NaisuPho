@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Profile"
+            android:text="@string/profile_title"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/black" />
@@ -39,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Picture"
+            android:text="@string/picture_label"
             android:layout_marginStart="16dp"
             android:layout_centerVertical="true"
             android:textSize="16sp"
@@ -75,7 +75,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@string/name_label"
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
@@ -107,7 +107,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile"
+            android:text="@string/profile_title"
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/arrow_right_profile"
-            android:text="Your Profile"
+            android:text="@string/profile_placeholder"
             android:textSize="16sp"
             android:textColor="@android:color/darker_gray" />
 
@@ -139,7 +139,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gender"
+            android:text="@string/gender_label"
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
@@ -148,7 +148,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/arrow_right_gender"
-            android:text="Your Gender"
+            android:text="@string/gender_placeholder"
             android:textSize="16sp"
             android:textColor="@android:color/darker_gray" />
 
@@ -171,7 +171,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Email"
+            android:text="@string/email_label"
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
@@ -204,7 +204,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Phone Number"
+            android:text="@string/phone_number_label"
             android:textSize="16sp"
             android:textColor="@android:color/black" />
 
@@ -213,7 +213,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@+id/arrow_right_phone_number"
-            android:text="Add Phone Number"
+            android:text="@string/phone_number_placeholder"
             android:textSize="16sp"
             android:textColor="@android:color/darker_gray" />
 
@@ -231,7 +231,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Naishu Pho protects your personal information and keeps it private and secure."
+        android:text="@string/lock_message"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="14sp" />
     <Button
@@ -239,7 +239,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Update Profile"
+        android:text="@string/update_profile_button"
         android:backgroundTint="@color/red"
         />
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.example.naisupho.BaseBottomSheetFragment
 import com.example.naisupho.databinding.BottomSheetAddressBinding
 import com.example.naisupho.model.Address
 import com.example.naisupho.viewmodel.AddressViewModel
@@ -16,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AddressBottomSheet(
     private val onSave: (Address) -> Unit,
     private val existingAddress: Address? = null
-) : BottomSheetDialogFragment() {
+) : BaseBottomSheetFragment() {
 
     private val addressViewModel: AddressViewModel by viewModels()
     private var _binding: BottomSheetAddressBinding? = null

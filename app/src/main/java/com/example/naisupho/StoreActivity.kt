@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class StoreActivity : AppCompatActivity() {
+class StoreActivity : BaseActivity() {
     private lateinit var binding: ActivityStoreBinding
     private val storeViewModel: StoreViewModel by viewModels()
     private val homeViewModel: HomeViewModel by viewModels()
@@ -59,13 +59,13 @@ class StoreActivity : AppCompatActivity() {
     }
 
     private fun setupTabLayout() {
-        val allMenuTab = binding.tabLayout.newTab().setText("All Menu")
+        val allMenuTab = binding.tabLayout.newTab().setText(getString(R.string.all_menu))
         binding.tabLayout.addTab(allMenuTab)
-        allMenuTab.tag = "All Menu"
+        allMenuTab.tag = getString(R.string.all_menu)
 
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val isAllMenuTab = tab?.tag == "All Menu"
+                val isAllMenuTab = tab?.tag == getString(R.string.all_menu)
                 if (isAllMenuTab) {
                     storeViewModel.getAllItems()
                 } else {
@@ -83,8 +83,8 @@ class StoreActivity : AppCompatActivity() {
         // Quan sát danh sách cửa hàng để lấy thông tin chi tiết của cửa hàng hiện tại
         homeViewModel.stores.observe(this, Observer { storesList ->
             storesList.find { it.storeId == storeId }?.let { store ->
-                binding.storeNameTextView.text = "Store Name: ${store.storeName}"
-                binding.storeAddressTextView.text = "Store Address: ${store.storeAddress}"
+                binding.storeNameTextView.text = getString(R.string.store_name_format, store.storeName)
+                binding.storeAddressTextView.text = getString(R.string.store_address_format, store.storeAddress)
                 Glide.with(this).load(Uri.parse(store.storePhotoUrl)).into(binding.storeImageView)
                 binding.storeRatingBar.rating = store.storeRate ?: 0.0f
             }
@@ -93,7 +93,7 @@ class StoreActivity : AppCompatActivity() {
         // Quan sát thời gian di chuyển cho cửa hàng hiện tại
         homeViewModel.travelTimes.observe(this, Observer { travelTimes ->
             val travelTime = travelTimes[storeId] ?: "N/A"
-            binding.travelTimeTextView.text = "Estimated Delivery Time: ~${travelTime}"
+            binding.travelTimeTextView.text = getString(R.string.estimated_delivery_time, travelTime)
         })
     }
 

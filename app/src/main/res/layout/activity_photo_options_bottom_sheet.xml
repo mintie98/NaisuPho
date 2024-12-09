@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="Select Existing Photo"
+        android:text="@string/select_existing_photo"
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="@android:color/black" />
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="Take New Photo"
+        android:text="@string/take_new_photo"
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="@android:color/black" />
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="@android:color/black" />

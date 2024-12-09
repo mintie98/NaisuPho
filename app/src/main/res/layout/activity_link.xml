@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Link Payment Method"
+            android:text="@string/link_payment_title"
             android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -39,13 +39,14 @@
         android:layout_marginTop="16dp"
         android:src="@drawable/pho" />
 
+
     <!-- Description -->
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Link your payment method to proceed with payments."
+        android:text="@string/link_payment_description"
         android:textSize="16sp"
         android:gravity="center" />
 
@@ -55,7 +56,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Link Payment Method"
+        android:text="@string/link_button_text"
         android:backgroundTint="@color/red"
         android:textColor="@android:color/white" />
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
 </LinearLayout>

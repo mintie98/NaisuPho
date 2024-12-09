@@ -46,7 +46,7 @@ class AddressViewModel @Inject constructor(
         }
     }
 
-    private fun fetchAddresses() {
+    fun fetchAddresses() {
         databaseRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val addressList = mutableListOf<Address>()

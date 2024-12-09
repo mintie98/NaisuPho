@@ -2,13 +2,16 @@ package com.example.naisupho.userInfo
 
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.naisupho.BaseActivity
 import com.example.naisupho.bottomsheet.AddPhoneBottomSheet
 import com.example.naisupho.bottomsheet.EditNameBottomSheet
 import com.example.naisupho.bottomsheet.PhotoOptionsBottomSheet
 import com.example.naisupho.bottomsheet.SelectGenderBottomSheet
 import com.example.naisupho.databinding.ActivityEditInfoBinding
+import com.example.naisupho.viewmodel.PayOutViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -22,8 +25,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EditInfoActivity : AppCompatActivity(), PhotoOptionsBottomSheet.PhotoOptionsListener {
+class EditInfoActivity : BaseActivity(), PhotoOptionsBottomSheet.PhotoOptionsListener {
     private lateinit var binding: ActivityEditInfoBinding
+    private val viewModel: PayOutViewModel by viewModels()
 
     @Inject
     lateinit var auth: FirebaseAuth
@@ -113,12 +117,7 @@ class EditInfoActivity : AppCompatActivity(), PhotoOptionsBottomSheet.PhotoOptio
 
         // Phone number
         binding.arrowRightPhoneNumber.setOnClickListener {
-            val bottomSheet = AddPhoneBottomSheet()
-            bottomSheet.setListener(object : AddPhoneBottomSheet.AddPhoneListener {
-                override fun onSend(countryCode: String, phoneNumber: String) {
-                    binding.phoneNumber.text = "$countryCode $phoneNumber"
-                }
-            })
+            val bottomSheet = AddPhoneBottomSheet(viewModel)
             bottomSheet.show(supportFragmentManager, "AddPhoneBottomSheet")
         }
 

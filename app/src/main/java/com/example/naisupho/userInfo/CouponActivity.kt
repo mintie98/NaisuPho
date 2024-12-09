@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.lifecycle.Observer
+import com.example.naisupho.BaseActivity
 import com.example.naisupho.R
 import com.example.naisupho.adapter.CouponAdapter
 import com.example.naisupho.databinding.ActivityCouponBinding
@@ -15,7 +16,7 @@ import com.example.naisupho.viewmodel.CouponViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CouponActivity : AppCompatActivity() {
+class CouponActivity : BaseActivity() {
 
     private val viewModel: CouponViewModel by viewModels()
     private lateinit var couponAdapter: CouponAdapter

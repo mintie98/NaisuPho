@@ -36,7 +36,7 @@
             android:hint="Search"
             android:iconifiedByDefault="false"
             android:queryBackground="@android:color/transparent"
-            android:queryHint="What do you want to order?"
+            android:queryHint="@string/search_hint"
             android:searchIcon="@drawable/search" />
 
     </RelativeLayout>
@@ -56,7 +56,7 @@
         android:layout_marginTop="10dp"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="Menu"
+        android:text="@string/menu_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoryRecyclerView" />

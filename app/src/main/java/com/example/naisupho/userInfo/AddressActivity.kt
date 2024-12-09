@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.naisupho.BaseActivity
 import com.example.naisupho.adapter.AddressAdapter
 import com.example.naisupho.bottomsheet.AddressBottomSheet
 import com.example.naisupho.databinding.ActivityAddressBinding
@@ -15,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddressActivity : AppCompatActivity() {
+class AddressActivity : BaseActivity() {
 
     private lateinit var binding: ActivityAddressBinding
     private lateinit var addressAdapter: AddressAdapter

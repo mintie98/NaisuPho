@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.naisupho.BaseFragment
 import com.example.naisupho.adapter.CartAdapter
 import com.example.naisupho.databinding.FragmentCartBinding
 import com.example.naisupho.model.StoreCartItem
@@ -14,7 +15,7 @@ import com.example.naisupho.viewmodel.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CartFragment : Fragment() {
+class CartFragment : BaseFragment() {
 
     private lateinit var binding: FragmentCartBinding
     private val cartViewModel: CartViewModel by viewModels()

@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="Payment"
+        android:text="@string/checkout_title"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_watch"
                 android:drawablePadding="8dp"
-                android:text="Delivery Time"
+                android:text="@string/delivery_time"
                 android:textSize="16sp" />
 
             <TextView
@@ -120,7 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginStart="5dp"
-        android:text="Payment Method"
+        android:text="@string/payment_options_title"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="Paypay"
+                android:text="@string/payment_method"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -167,7 +167,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginStart="5dp"
-        android:text="Order Summary"
+        android:text="@string/order_summary_title"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -183,29 +183,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvOrderSummaryTitle">
 
-        <RelativeLayout
-            android:id="@+id/layoutStore"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:background="?attr/selectableItemBackground">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <TextView
-                android:id="@+id/tvRestaurantName"
-                android:layout_width="wrap_content"
+            <!-- Phần thông tin cửa hàng -->
+            <RelativeLayout
+                android:id="@+id/layoutStore"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/storeicon"
-                android:drawablePadding="8dp"
-                android:text="NaisuPho"
-                android:textSize="16sp" />
+                android:background="?attr/selectableItemBackground">
 
-            <ImageView
-                android:id="@+id/imgStoreArrow"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_down" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvStoreName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/storeicon"
+                    android:drawablePadding="8dp"
+                    android:text="NaisuPho"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/imgStoreArrow"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_down" />
+            </RelativeLayout>
+
+            <!-- RecyclerView hiển thị danh sách món -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvStoreItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"
+                android:paddingTop="8dp" />
+        </LinearLayout>
+
 
         <RelativeLayout
             android:id="@+id/layoutCoupon"
@@ -220,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_coupon"
                 android:drawablePadding="8dp"
-                android:text="Add Discount Code"
+                android:text="@string/add_discount_code"
                 android:textSize="16sp" />
 
             <ImageView
@@ -238,7 +255,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Payment Summary"
+        android:text="@string/payment_summary_title"
         android:layout_marginStart="5dp"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -260,28 +277,28 @@
             android:id="@+id/tvTotalCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total Cost: 640 ¥"
+            android:text="@string/total_cost"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvDiscount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Discount: 300 ¥"
+            android:text="@string/discount"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvDeliveryFee"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delivery Fee: 300 ¥"
+            android:text="@string/delivery_fee"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tvTotalAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total: 1,167 ¥"
+            android:text="@string/total_amount"
             android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -292,7 +309,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Terms: By placing an order, you acknowledge that you have read and agree to NaisuPho’s privacy policy and terms of use."
+        android:text="@string/terms_and_conditions"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -304,7 +321,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Place Order"
+        android:text="@string/place_order"
         android:backgroundTint="@color/red"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"

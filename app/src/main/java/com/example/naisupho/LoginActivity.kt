@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupGoogleSignInClient() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(BuildConfig.default_web_client_id)
             .requestEmail()
             .build()
 

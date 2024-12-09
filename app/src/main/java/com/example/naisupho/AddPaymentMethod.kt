@@ -8,7 +8,7 @@ import com.example.naisupho.databinding.ActivityAddPaymentMethodBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddPaymentMethod : AppCompatActivity() {
+class AddPaymentMethod : BaseActivity() {
     private lateinit var binding: ActivityAddPaymentMethodBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +19,12 @@ class AddPaymentMethod : AppCompatActivity() {
         binding.paypay.setOnClickListener {
             val intent = Intent(this, LinkActivity::class.java)
             intent.putExtra("PAYMENT_METHOD", "PayPay")
+            startActivity(intent)
+        }
+
+        binding.rakutenPay.setOnClickListener {
+            val intent = Intent(this, LinkActivity::class.java)
+            intent.putExtra("PAYMENT_METHOD", "RakutenPay")
             startActivity(intent)
         }
 

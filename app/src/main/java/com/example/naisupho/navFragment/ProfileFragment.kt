@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.example.naisupho.BaseFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.example.naisupho.databinding.FragmentProfileBinding
@@ -20,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment() {
 
     @Inject
     lateinit var auth: FirebaseAuth

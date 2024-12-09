@@ -4,21 +4,33 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select an Address"
+        android:text="@string/select_address"
         android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center"
         android:paddingBottom="8dp" />
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAddressList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@android:drawable/divider_horizontal_bright"
         android:dividerHeight="1dp" />
+
+    <!-- Add New Address Button -->
+    <Button
+        android:id="@+id/btnAddNewAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_new_address"
+        android:layout_marginTop="16dp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/red" />
 
 </LinearLayout>

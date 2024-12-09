@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Address"
+            android:text="@string/address_title"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -50,7 +50,7 @@
             android:layout_width="324dp"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/lock_icon"
-            android:text="Your data will be encrypted and stored securely."
+            android:text="@string/data_encryption_info"
             android:textColor="@android:color/holo_green_dark"
             android:textSize="14sp" />
     </RelativeLayout>
@@ -77,7 +77,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:backgroundTint="@android:color/holo_orange_light"
-        android:text="Add new address"
+        android:text="@string/add_new_address"
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:textStyle="bold" />

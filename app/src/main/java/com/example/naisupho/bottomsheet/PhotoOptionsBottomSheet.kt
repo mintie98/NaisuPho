@@ -16,13 +16,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import com.example.naisupho.BaseBottomSheetFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.example.naisupho.databinding.ActivityPhotoOptionsBottomSheetBinding
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-class PhotoOptionsBottomSheet : BottomSheetDialogFragment() {
+class PhotoOptionsBottomSheet : BaseBottomSheetFragment() {
 
     private var listener: PhotoOptionsListener? = null
     private lateinit var binding: ActivityPhotoOptionsBottomSheetBinding

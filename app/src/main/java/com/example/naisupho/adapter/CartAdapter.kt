@@ -23,12 +23,14 @@ class CartAdapter(
     inner class CartViewHolder(val binding: CartItemStoreBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(storeCartItem: StoreCartItem) {
             binding.storeName.text = storeCartItem.storeName
-            binding.totalPrice.text = "Tổng giá: ${storeCartItem.totalPrice} ¥"
-            binding.orderQuantity.text = "Số lượng món: ${storeCartItem.itemQuantity}"
+            binding.totalPrice.text = context.getString(R.string.total_price_format, storeCartItem.totalPrice.toString())
+
+            binding.orderQuantity.text = context.getString(R.string.item_quantity_format, storeCartItem.itemQuantity)
+
             binding.deliveryAddress.text = if (defaultAddress == "") {
-                "Address : Please add a delivery address"
+                context.getString(R.string.add_delivery_address)
             } else {
-                "Giao hàng đến: $defaultAddress"
+                context.getString(R.string.delivery_address_format, defaultAddress)
             }
 
 
@@ -58,13 +60,12 @@ class CartAdapter(
 
         private fun showDeleteConfirmationDialog(storeId: String) {
             val dialog = AlertDialog.Builder(context)
-                .setTitle("Delete Cart")
-                .setMessage("Are you sure you want to delete this cart?")
-                .setPositiveButton("Yes") { _, _ ->
-                    // Call the delete cart function in ViewModel
+                .setTitle(context.getString(R.string.delete_cart_title))
+                .setMessage(context.getString(R.string.delete_cart_message))
+                .setPositiveButton(context.getString(R.string.delete_cart_yes)) { _, _ ->
                     cartViewModel.deleteCart(storeId)
                 }
-                .setNegativeButton("No", null)
+                .setNegativeButton(context.getString(R.string.delete_cart_no), null)
                 .create()
             dialog.show()
         }

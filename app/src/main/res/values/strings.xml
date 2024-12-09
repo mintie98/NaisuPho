@@ -2,13 +2,167 @@
     <string name="app_name">NaisuPho</string>
     <string name="name_app">Naisu Pho</string>
     <string name="slogan">Let’s Experience Vietnamese Cuisine Everywhere</string>
-    <string name="default_web_client_id" translatable="false">1098029441074-qmiepn5a41ekdh0ol29dp7nlpmei544k.apps.googleusercontent.com</string>
-    <string name="gcm_defaultSenderId" translatable="false">1098029441074</string>
-    <string name="google_api_key" translatable="false">AIzaSyDPZ3Dqu7ig6xv4vjPXyCbYCu0ur3dl7z8</string>
-    <string name="google_app_id" translatable="false">1:1098029441074:android:5eb122f794828aa149dc2b</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="price_format">￥%1$d</string>
     <string name="distance_format">%s km</string>
+    <!-- Payment Methods -->
+    <string name="add_payment_method">Add Payment Method</string>
+    <string name="data_encryption_notice">Your data will be encrypted</string>
+    <string name="paypay">PayPay</string>
+    <string name="rakuten_pay">Rakuten Pay</string>
+    <string name="apple_pay">Apple Pay</string>
+    <string name="line_pay">LinePay</string>
+    <string name="add_credit_card">Add Credit Card</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="add_mobile_number">Add Mobile Number</string>
+    <string name="phone_number_instructions">Please enter the phone number you want to register to your account.</string>
+    <string name="phone_number_hint">Phone number</string>
+    <string name="send_button">Send</string>
+    <string name="address_title">Address</string>
+    <string name="data_encryption_info">Your data will be encrypted and stored securely.</string>
+    <string name="add_new_address">Add New Address</string>
+    <string name="total_cost_label">Total Cost:</string>
+    <string name="checkout_button_text">Proceed to Checkout</string>
+    <string name="order_more_button_text">Order More</string>
+    <string name="coupon_title">Coupons</string>
+    <string name="refresh_button_text">Refresh</string>
+    <string name="add_to_cart_button">Add To Cart</string>
 
+    <!-- Edit Info -->
+    <string name="profile_title">Profile</string>
+    <string name="picture_label">Picture</string>
+    <string name="name_label">Name</string>
+    <string name="profile_placeholder">Your Profile</string>
+    <string name="gender_label">Gender</string>
+    <string name="gender_placeholder">Your Gender</string>
+    <string name="email_label">Email</string>
+    <string name="phone_number_label">Phone Number</string>
+    <string name="phone_number_placeholder">Add Phone Number</string>
+    <string name="lock_message">Naishu Pho protects your personal information and keeps it private and secure.</string>
+    <string name="update_profile_button">Update Profile</string>
+    <string name="edit_name_title">Edit Your Name</string>
+    <string name="edit_name_hint">Enter your name</string>
+    <string name="save_button_text">Save</string>
+    <string name="link_payment_title">Link Payment Method</string>
+    <string name="link_payment_description">Link your payment method to proceed with payments.</string>
+    <string name="payment_method_linked">Your %1$s account is already linked.</string>
+    <string name="link_button_text">Link Payment Method</string>
+
+    <!-- Login -->
+    <string name="login">Login</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="or">Or</string>
+    <string name="don_t_have_account">Don’t Have Account?</string>
+
+    <!-- Placeholders -->
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="signin_title">Sign In To Your Account</string>
+
+    <!-- Error/Alert messages -->
+    <string name="invalid_email">Please enter a valid email</string>
+    <string name="invalid_password">Password must be at least 6 characters</string>
+
+    <!-- Bottom Navigation Menu -->
+    <string name="nav_home">Home</string>
+    <string name="nav_orders">Orders</string>
+    <string name="nav_cart">Cart</string>
+    <string name="nav_profile">Profile</string>
+    <string name="notification">Notification</string>
+
+    <!-- Titles -->
+    <string name="checkout_title">Payment</string>
+    <string name="payment_options_title">Payment Method</string>
+    <string name="order_summary_title">Order Summary</string>
+    <string name="payment_summary_title">Payment Summary</string>
+    <string name="terms_and_conditions">Terms: By placing an order, you acknowledge that you have read and agree to NaisuPho’s privacy policy and terms of use.</string>
+    <string name="place_order">Place Order</string>
+    <string name="delivery_time">Delivery Time</string>
+    <!-- Payment Method -->
+    <string name="payment_method">Paypay</string>
+
+    <!-- Order Summary -->
+    <string name="add_discount_code">Add Discount Code</string>
+
+    <!-- Payment Summary -->
+    <string name="total_cost">Total Cost: ￥%d</string>
+    <string name="discount">Discount: ￥%d</string>
+    <string name="delivery_fee">Delivery Fee: ￥%d</string>
+    <string name="total_amount">Total: ￥%d</string>
+
+    <string name="select_address">Select an Address</string>
+    <string name="select_existing_photo">Select Existing Photo</string>
+    <string name="take_new_photo">Take New Photo</string>
+    <string name="cancel">Cancel</string>
+    <string name="search_hint">What do you want to order?</string>
+    <string name="menu_title">Menu</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
+    <string name="gender_other">Other</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="country_label">Country</string>
+    <string name="language_label">Language</string>
+    <string name="currency_label">Currency</string>
+    <string name="selected_currency">Yen</string>
+    <string name="terms_conditions">Terms &amp; Conditions</string>
+    <string name="feedback_reviews">Feedback &amp; Reviews</string>
+    <string name="privacy_policy_cookies">Privacy Policy &amp; Cookies</string>
+    <string name="switch_accounts">Switch Accounts</string>
+    <string name="logout">Logout</string>
+
+    <string name="sign_up_here">Sign Up Here</string>
+    <string name="username_hint">User Name</string>
+    <string name="repassword_hint">Re-Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="store_name_format">Store Name: %1$s</string>
+    <string name="store_address_format">Store Address: %1$s</string>
+    <string name="estimated_delivery_time">Estimated Delivery Time: ~%1$s</string>
+    <string name="all_menu">All Menu</string>
+    <string name="default_address">Default</string>
+    <string name="delete">Delete</string>
+    <string name="copy">Copy</string>
+    <string name="edit">Edit</string>
+
+    <string name="post_code">Post code :</string>
+    <string name="enter_postcode">Enter Postcode</string>
+    <string name="search">Search</string>
+    <string name="address">Address :</string>
+    <string name="address_details">Address details :</string>
+    <string name="address_hint">Address Details (e.g., Apartment, Floor, etc.)</string>
+    <string name="set_default_address">Set as Default Address</string>
+    <string name="save">Save</string>
+    <string name="view_store">View Store</string>
+    <string name="view_cart">View Cart</string>
+    <string name="total_price_format">Total Price: %1$s ¥</string>
+    <string name="item_quantity_format">Order Quantity: %1$d</string>
+    <string name="add_delivery_address">Address : Please add a delivery address</string>
+    <string name="delivery_address_format">Delivery To: %1$s</string>
+    <string name="delete_cart_title">Delete Cart</string>
+    <string name="delete_cart_message">Are you sure you want to delete this cart?</string>
+    <string name="delete_cart_yes">Yes</string>
+    <string name="delete_cart_no">No</string>
+    <string name="my_cart">My Cart</string>
+    <string name="near_me">Near Me</string>
+    <string name="view_menu">View Menu</string>
+
+    <string name="add_new_card">Add New Card</string>
+    <string name="data_encryption">All data is encrypted</string>
+    <string name="card_number_hint">Card Number</string>
+    <string name="billing_address_hint">Billing Address</string>
+    <string name="add_card_button">Add Card</string>
+    <string name="card_protection_info">Naisupho Protects Your Card Information</string>
+    <string name="card_protection_details">Naisu Pho handles card information in accordance with PCI DSS (Payment Card Industry Data Security Standard). Your card information is safe and will not be leaked. Naisu Pho will never sell your card information.</string>
+    <string name="security_reliability_title">Security and High Reliability</string>
+    <string name="security_reliability_details">Your security is our top priority. To protect your safety, we use market-leading risk and fraud prevention systems for all transactions. Need help with security issues?</string>
+    <string name="profile_reviews">Reviews</string>
+    <string name="profile_address">Address</string>
+    <string name="details">Details</string>
+    <string name="completed">Completed</string>
+    <string name="date_time_format">%s</string>
+    <string name="total_amount_format">Total: ￥%d</string>
+    <string name="logout_message">Are you sure you want to logout?</string>
+    <string name="choose_language">Choose Language</string>
 </resources>

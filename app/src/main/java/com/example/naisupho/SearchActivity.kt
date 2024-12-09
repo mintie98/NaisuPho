@@ -16,7 +16,7 @@ import com.example.naisupho.viewmodel.MenuViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : BaseActivity() {
     private lateinit var binding: ActivitySearchBinding
     private val viewModel: MenuViewModel by viewModels()
     private var userLocation: String? = null

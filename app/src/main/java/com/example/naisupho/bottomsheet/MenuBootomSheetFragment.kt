@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.naisupho.BaseBottomSheetFragment
 import com.example.naisupho.adapter.MenuAdapter
 import com.example.naisupho.databinding.FragmentMenuBootomSheetBinding
 import com.example.naisupho.model.MenuItem
@@ -16,7 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MenuBootomSheetFragment : BottomSheetDialogFragment() {
+class MenuBootomSheetFragment : BaseBottomSheetFragment() {
 
     private lateinit var binding: FragmentMenuBootomSheetBinding
     private val menuViewModel: MenuViewModel by viewModels()

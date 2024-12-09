@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Add New Card"
+            android:text="@string/add_new_card"
             android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="All data is encrypted"
+        android:text="@string/data_encryption"
         android:textColor="@android:color/holo_green_dark"
         android:gravity="center_horizontal"
         android:padding="4dp" />
@@ -77,7 +77,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Card Number"
+        android:hint="@string/card_number_hint"
         android:inputType="number"
         android:padding="12dp"
         android:background="@drawable/edittextshape"
@@ -105,7 +105,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Billing Address"
+        android:hint="@string/billing_address_hint"
         android:inputType="text"
         android:padding="12dp"
         android:background="@drawable/edittextshape"
@@ -116,13 +116,13 @@
         android:id="@+id/add_card_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add Card"
+        android:text="@string/add_card_button"
         android:backgroundTint="@color/red"
         android:textColor="@android:color/white" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Naisupho Protects Your Card Information"
+        android:text="@string/card_protection_info"
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_marginBottom="8dp" />
@@ -130,7 +130,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Naisu Pho handles card information in accordance with PCI DSS (Payment Card Industry Data Security Standard). Your card information is safe and will not be leaked. Naisu Pho will never sell your card information."
+        android:text="@string/card_protection_details"
         android:textSize="14sp"
         android:layout_marginBottom="16dp" />
 
@@ -140,7 +140,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Security and High Reliability"
+        android:text="@string/security_reliability_title"
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_marginBottom="8dp" />
@@ -148,7 +148,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your security is our top priority. To protect your safety, we use market-leading risk and fraud prevention systems for all transactions. Need help with security issues?"
+        android:text="@string/security_reliability_details"
         android:textSize="14sp"
         android:layout_marginBottom="8dp" />
 
@@ -156,7 +156,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Contact Us"
+        android:text="@string/contact_us"
         android:textSize="14sp"
         android:textColor="@android:color/holo_blue_dark" />
 

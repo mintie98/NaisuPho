@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Add Payment Method"
+            android:text="@string/add_payment_method"
             android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_toEndOf="@id/lock_icon"
-            android:text="Your data will be encrypted"
+            android:text="@string/data_encryption_notice"
             android:textColor="@android:color/holo_green_dark"
             android:textSize="14sp" />
     </RelativeLayout>
@@ -75,7 +75,37 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/icPaypay"
             android:layout_marginStart="12dp"
-            android:text="PayPay"
+            android:text="@string/paypay"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_next" />
+    </RelativeLayout>
+
+    <!--Rakuten Pay-->
+    <RelativeLayout
+        android:id="@+id/rakutenPay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="?attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/icRpay"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_rakutenpay" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/icRpay"
+            android:layout_marginStart="12dp"
+            android:text="@string/rakuten_pay"
             android:textSize="16sp" />
 
         <ImageView
@@ -105,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/icApplepay"
             android:layout_marginStart="12dp"
-            android:text="Apple Pay"
+            android:text="@string/apple_pay"
             android:textSize="16sp" />
 
         <ImageView
@@ -135,7 +165,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/icLinepay"
             android:layout_marginStart="12dp"
-            android:text="LinePay"
+            android:text="@string/line_pay"
             android:textSize="16sp" />
 
         <ImageView
@@ -165,7 +195,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/icAdd"
             android:layout_marginStart="12dp"
-            android:text="Thêm thẻ tín dụng"
+            android:text="@string/add_credit_card"
             android:textSize="16sp" />
 
         <ImageView
@@ -179,7 +209,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Contact Us"
+        android:text="@string/contact_us"
         android:layout_marginTop="10dp"
         android:textSize="14sp"
         android:textColor="@android:color/holo_blue_dark" />

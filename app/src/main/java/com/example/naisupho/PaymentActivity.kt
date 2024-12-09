@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PaymentActivity : AppCompatActivity() {
+class PaymentActivity : BaseActivity() {
 
     private lateinit var binding: ActivityPaymentBinding
     private lateinit var paymentAdapter: PaymentAdapter

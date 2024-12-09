@@ -6,7 +6,7 @@
 
     <!-- Hình ảnh sản phẩm -->
     <ImageView
-        android:id="@+id/imgProductImage"
+        android:id="@+id/imgItemImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/pho"

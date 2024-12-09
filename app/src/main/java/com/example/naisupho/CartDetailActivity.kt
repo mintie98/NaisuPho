@@ -11,7 +11,7 @@ import com.example.naisupho.viewmodel.CartViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CartDetailActivity : AppCompatActivity() {
+class CartDetailActivity : BaseActivity() {
 
     private lateinit var binding: ActivityCartDetailBinding
     private val cartViewModel: CartViewModel by viewModels()
@@ -37,6 +37,7 @@ class CartDetailActivity : AppCompatActivity() {
             val intent = Intent(this, PayOutActivity::class.java)
             intent.putExtra("totalCost", cartViewModel.totalCost.value ?: 0)
             intent.putExtra("storeId", storeId)
+            intent.putExtra("storeName", binding.storeName.text)
             startActivity(intent)
         }
         binding.orderMoreButton.setOnClickListener {
@@ -55,7 +56,7 @@ class CartDetailActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView(storeId: String) {
-        cartItemAdapter = CartItemAdapter(this, storeId, cartViewModel) {
+        cartItemAdapter = CartItemAdapter(this, storeId, cartViewModel,false) {
             cartViewModel.deleteCart(storeId) // Xóa CartStoreItem của cửa hàng đó
             finish() // Kết thúc CartDetailActivity
         }

@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@drawable/proceedbutonshape"
     android:padding="16dp"
     android:layout_marginBottom="8dp">
 
@@ -20,24 +20,62 @@
             android:textStyle="bold"
             android:textSize="16sp" />
 
+    </LinearLayout>
+
+    <!-- Phần thời gian giao dịch -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+
+        <TextView
+            android:id="@+id/tvTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20 Nov 2024, 12:00 PM"
+            android:textSize="14sp"
+
+            android:textColor="@color/red" />
         <TextView
             android:id="@+id/tvTransactionStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Success"
+            android:text="@string/completed"
+            android:layout_marginStart="5dp"
             android:textStyle="bold"
+            android:layout_toEndOf="@id/tvTimestamp"
             android:textColor="@color/green" />
-    </LinearLayout>
+    </RelativeLayout>
 
-    <!-- Phần thời gian giao dịch -->
-    <TextView
-        android:id="@+id/tvTimestamp"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="20 Nov 2024, 12:00 PM"
-        android:textSize="14sp"
-        android:layout_marginTop="4dp"
-        android:textColor="@color/red" />
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tvTotalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: ￥1750"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ivDropdown"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_down" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginEnd="5dp"
+            android:text="@string/details"
+            android:layout_toLeftOf="@+id/ivDropdown"/>
+    </RelativeLayout>
+    <!-- Nút mũi tên -->
+
 
     <!-- Phần danh sách sản phẩm -->
     <androidx.recyclerview.widget.RecyclerView
@@ -45,15 +83,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:nestedScrollingEnabled="false" />
+        android:nestedScrollingEnabled="false"
+        android:visibility="gone" /> <!-- Mặc định ẩn -->
 
     <!-- Tổng tiền giao dịch -->
-    <TextView
-        android:id="@+id/tvTotalAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Total: ￥1750"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp" />
 </LinearLayout>

@@ -14,7 +14,7 @@ import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
 
-class LinkActivity : AppCompatActivity() {
+class LinkActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLinkBinding
     private val client = OkHttpClient()
@@ -51,6 +51,21 @@ class LinkActivity : AppCompatActivity() {
                 binding.descriptionTextView.text = "Link your PayPay account to proceed with payments."
                 binding.iconImageView.setImageResource(R.drawable.ic_paypay)
             }
+            "RakutenPay"-> {
+                binding.titleTextView.text = "Link RakutenPay"
+                binding.descriptionTextView.text = "Link your RakutenPay account to proceed with payments."
+                binding.iconImageView.setImageResource(R.drawable.ic_rakutenpay)
+            }
+            "LinePay" -> {
+                binding.titleTextView.text = "Link LinePay"
+                binding.descriptionTextView.text = "Link your LinePay account to proceed with payments."
+                binding.iconImageView.setImageResource(R.drawable.ic_linepay)
+            }
+            "ApplePay" -> {
+                binding.titleTextView.text = "Link ApplePay"
+                binding.descriptionTextView.text = "Link your ApplePay account to proceed with payments."
+                binding.iconImageView.setImageResource(R.drawable.ic_applepay)
+            }
             else -> {
                 binding.titleTextView.text = "Link Payment Method"
                 binding.descriptionTextView.text = "Link your payment method to proceed."
@@ -65,6 +80,8 @@ class LinkActivity : AppCompatActivity() {
             Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
             return
         }
+        showProgressBar() // Hiển thị ProgressBar khi bắt đầu liên kết
+
 
         val userId = currentUser.uid
         val url = "https://us-central1-naisupho.cloudfunctions.net/createAccountLinkQRCode?userId=$userId"
@@ -72,6 +89,7 @@ class LinkActivity : AppCompatActivity() {
         val request = Request.Builder().url(url).build()
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
+                runOnUiThread { hideProgressBar() } // Ẩn ProgressBar khi hoàn thành
                 response.use {
                     if (response.isSuccessful) {
                         val responseBody = response.body?.string()
@@ -112,6 +130,7 @@ class LinkActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
+                    hideProgressBar() // Ẩn ProgressBar khi có lỗi
                     Toast.makeText(
                         this@LinkActivity,
                         "Network error: ${e.message}",
@@ -211,7 +230,7 @@ class LinkActivity : AppCompatActivity() {
         paymentMethodsRef.setValue(newPaymentMethod)
             .addOnSuccessListener {
                 Log.d("LinkActivity", "PayPay info saved to RTDB.")
-                Toast.makeText(this, "PayPay linked and saved successfully.", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "PayPay linked and saved successfully.", Toast.LENGTH_SHORT).show()
                 checkPayPayLinkStatus("PayPay")  // Cập nhật trạng thái
             }
             .addOnFailureListener { e ->
@@ -226,6 +245,7 @@ class LinkActivity : AppCompatActivity() {
             Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show()
             return
         }
+        showProgressBar()
 
         val userId = currentUser.uid
         val database = FirebaseDatabase.getInstance()
@@ -233,6 +253,7 @@ class LinkActivity : AppCompatActivity() {
 
         paymentMethodsRef.get()
             .addOnSuccessListener { snapshot ->
+                hideProgressBar()
                 val isLinked = snapshot.children.any {
                     val provider = it.child("provider").value as? String
                     provider == paymentMethod // Chỉ kiểm tra trạng thái của phương thức được chọn
@@ -240,16 +261,27 @@ class LinkActivity : AppCompatActivity() {
 
                 if (isLinked) {
                     binding.linkButton.visibility = View.GONE
-                    binding.descriptionTextView.text = "Your $paymentMethod account is already linked."
+                    binding.descriptionTextView.text = getString(R.string.payment_method_linked, paymentMethod)
                 } else {
                     binding.linkButton.visibility = View.VISIBLE
-                    binding.descriptionTextView.text = "Link your payment method to proceed with payments."
+                    binding.descriptionTextView.text = getString(R.string.link_payment_description)
                 }
             }
             .addOnFailureListener { e ->
+                hideProgressBar()
                 Log.e("LinkActivity", "Error checking link status: ${e.message}")
                 Toast.makeText(this, "Failed to check link status.", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun showProgressBar() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.linkButton.isEnabled = false // Vô hiệu hóa nút trong khi chờ
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBar.visibility = View.GONE
+        binding.linkButton.isEnabled = true // Kích hoạt lại nút
     }
 
     override fun onNewIntent(intent: Intent?) {

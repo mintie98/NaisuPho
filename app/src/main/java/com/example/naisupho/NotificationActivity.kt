@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.naisupho.adapter.NotificationAdapter
 import com.example.naisupho.databinding.ActivityNotificationBinding
 
-class NotificationActivity : AppCompatActivity() {
+class NotificationActivity : BaseActivity() {
     private lateinit var binding: ActivityNotificationBinding
     private lateinit var notificationAdapter: NotificationAdapter
 

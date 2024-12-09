@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add New Address"
+        android:text="@string/add_new_address"
         android:layout_gravity="center"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -17,7 +17,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Post code :"
+        android:text="@string/post_code"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:hint="Enter Postcode"
+            android:hint="@string/enter_postcode"
             android:layout_gravity="center_vertical"
             android:background="@drawable/edittextshape"/>
 
@@ -39,7 +39,7 @@
             android:id="@+id/searchButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Search"
+            android:text="@string/search"
             android:textColor="@color/white"
             android:backgroundTint="@color/red"
             android:layout_marginStart="8dp" />
@@ -47,7 +47,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address :"
+        android:text="@string/address"
         android:textStyle="bold"/>
 
     <!-- TextView để hiển thị kết quả tự động điền địa chỉ -->
@@ -62,7 +62,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address details :"
+        android:text="@string/address_details"
         android:textStyle="bold"/>
 
     <!-- Nhập các chi tiết bổ sung -->
@@ -71,14 +71,14 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@drawable/edittextshape"
-        android:hint="Address Details (e.g., Apartment, Floor, etc.)" />
+        android:hint="@string/address_hint" />
 
     <CheckBox
         android:id="@+id/defaultCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Set as Default Address" />
+        android:text="@string/set_default_address" />
 
     <!-- Nút lưu và hủy -->
     <Button
@@ -88,13 +88,13 @@
         android:layout_marginTop="30dp"
         android:backgroundTint="@color/red"
         android:textColor="@color/white"
-        android:text="Save" />
+        android:text="@string/save" />
 
     <Button
         android:id="@+id/cancelButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:textColor="@android:color/holo_red_dark"
         android:backgroundTint="@android:color/white" />
 </LinearLayout>

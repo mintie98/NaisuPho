@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/delivery_address"
             android:layout_marginTop="8dp"
-            android:text="Xem giỏ hàng"
+            android:text="@string/view_cart"
             android:backgroundTint="@color/red"
             android:textColor="@android:color/white" />
 
@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/view_cart_button"
             android:layout_marginTop="4dp"
-            android:text="Xem cửa hàng"
+            android:text="@string/view_store"
             android:backgroundTint="@color/grey"
             android:textColor="@color/black" />
     </RelativeLayout>

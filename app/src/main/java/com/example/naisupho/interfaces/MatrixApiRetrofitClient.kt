@@ -1,11 +1,10 @@
 package com.example.naisupho.interfaces
 
-import com.example.naisupho.interfaces.TravelTimeResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface RetrofitClient {
+interface MatrixApiRetrofitClient {
 
     @GET("distancematrix/json")
     fun getEstimatedTravelTime(

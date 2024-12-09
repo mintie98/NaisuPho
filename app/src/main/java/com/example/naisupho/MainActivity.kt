@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mAuth: FirebaseAuth

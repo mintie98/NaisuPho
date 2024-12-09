@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Phương thức thanh toán"
+            android:text="@string/payment_options_title"
             android:textSize="18sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -49,14 +49,13 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/plus"
-            android:contentDescription="Thêm phương thức thanh toán" />
+            android:src="@drawable/plus" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Thêm phương thức thanh toán"
+            android:text="@string/add_payment_method"
             android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.example.naisupho.BaseBottomSheetFragment
 import com.example.naisupho.databinding.FragmentPaymentBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class PaymentBottomSheetFragment : BottomSheetDialogFragment() {
+class PaymentBottomSheetFragment : BaseBottomSheetFragment() {
     private lateinit  var binding: FragmentPaymentBottomSheetBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
