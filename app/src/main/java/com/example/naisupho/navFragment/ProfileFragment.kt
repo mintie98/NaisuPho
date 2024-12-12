@@ -2,12 +2,11 @@ package com.example.naisupho.navFragment
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import com.example.naisupho.BaseFragment
+import com.example.naisupho.utils.BaseFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.example.naisupho.databinding.FragmentProfileBinding
@@ -44,8 +43,9 @@ class ProfileFragment : BaseFragment() {
             database.child("Users").child(currentUser.uid).child("name")
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (_binding == null || !isAdded) return // Kiểm tra trước khi truy cập UI
                         val userName = dataSnapshot.getValue(String::class.java)
-                        binding.userName.text = userName
+                        binding.userName.text = userName ?: "Unknown"
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -56,8 +56,9 @@ class ProfileFragment : BaseFragment() {
             database.child("Users").child(currentUser.uid).child("photoUrl")
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (_binding == null || !isAdded) return // Kiểm tra trước khi truy cập UI
                         val photoUrl = dataSnapshot.getValue(String::class.java)
-                        if (photoUrl != null && isAdded) {
+                        if (!photoUrl.isNullOrEmpty()) {
                             Glide.with(this@ProfileFragment)
                                 .load(photoUrl)
                                 .into(binding.userImage)

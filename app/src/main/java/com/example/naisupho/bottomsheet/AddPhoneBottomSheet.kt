@@ -1,22 +1,19 @@
 package com.example.naisupho.bottomsheet
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
+import com.example.naisupho.R
 import com.example.naisupho.BaseBottomSheetFragment
 import com.example.naisupho.databinding.ActivityAddPhoneBottomSheetBinding
-import com.example.naisupho.databinding.LayoutCustomDialogBinding
+import com.example.naisupho.databinding.OtpPopUpBinding
 import com.example.naisupho.viewmodel.PayOutViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import java.util.concurrent.TimeUnit
@@ -36,6 +33,24 @@ class AddPhoneBottomSheet(private val viewModel: PayOutViewModel) : BaseBottomSh
     ): View {
         _binding = ActivityAddPhoneBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
+        // dùng để gỡ số điện thoại đã liên kết
+//        val user = FirebaseAuth.getInstance().currentUser
+//        user?.providerData?.forEach { userInfo ->
+//            if (userInfo.providerId == "phone" && user.phoneNumber != null) {
+//                // Gỡ liên kết số điện thoại nếu đã tồn tại
+//                user.unlink("phone")
+//                    .addOnCompleteListener { task ->
+//                        if (task.isSuccessful) {
+//                            Log.d("FirebaseAuth", "Phone number unlinked successfully.")
+//                            Toast.makeText(this, "Phone number unlinked", Toast.LENGTH_SHORT).show()
+//                        } else {
+//                            Log.e("FirebaseAuth", "Failed to unlink phone number", task.exception)
+//                            Toast.makeText(this, "Failed to unlink phone number", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//            }
+//        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +58,7 @@ class AddPhoneBottomSheet(private val viewModel: PayOutViewModel) : BaseBottomSh
         auth = FirebaseAuth.getInstance()
 
         progressDialog = ProgressDialog(requireContext()).apply {
-            setMessage("Sending verification code...")
+            setMessage(getString(R.string.sending_verification_code))
             setCancelable(false)
         }
 
@@ -52,7 +67,7 @@ class AddPhoneBottomSheet(private val viewModel: PayOutViewModel) : BaseBottomSh
             var phoneNumber = binding.phoneNumberEditText.text.toString().trim()
 
             if (phoneNumber.startsWith("0")) {
-                phoneNumber = phoneNumber.substring(1) // Xóa số 0 đầu
+                phoneNumber = phoneNumber.substring(1)
             }
 
             val fullPhoneNumber = "$countryCode$phoneNumber"
@@ -63,9 +78,7 @@ class AddPhoneBottomSheet(private val viewModel: PayOutViewModel) : BaseBottomSh
     }
 
     private fun sendVerificationCode(phoneNumber: String) {
-        Log.d("AddPhoneBottomSheet", "Sending verification code to: $phoneNumber")
         progressDialog.show()
-
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)
             .setTimeout(60L, TimeUnit.SECONDS)
@@ -77,73 +90,40 @@ class AddPhoneBottomSheet(private val viewModel: PayOutViewModel) : BaseBottomSh
                 }
 
                 override fun onVerificationFailed(e: FirebaseException) {
-                    Log.e("AddPhoneBottomSheet", "Verification failed: ${e.message}")
                     progressDialog.dismiss()
-                    if (isAdded) {
-                        Toast.makeText(context, "Failed to send code: ${e.message}", Toast.LENGTH_SHORT).show()
-                    }
+                    //Toast.makeText(context, getString(R.string.failed_to_send_code, e.message), Toast.LENGTH_SHORT).show()
                 }
 
-                override fun onCodeSent(
-                    verificationId: String,
-                    token: PhoneAuthProvider.ForceResendingToken
-                ) {
-                    Log.d("AddPhoneBottomSheet", "Code sent successfully. Verification ID: $verificationId")
+                override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
                     this@AddPhoneBottomSheet.verificationId = verificationId
                     progressDialog.dismiss()
-                    if (isAdded) {
-                        dismiss() // Đóng BottomSheet
-                        showOtpPopup() // Hiển thị popup nhập OTP
-                    }
+                    showOtpPopup()
                 }
             })
             .build()
-
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
     private fun showOtpPopup() {
-        // Tạo dialog
         val dialog = Dialog(requireContext())
-
-        // Sử dụng View Binding
-        val binding = LayoutCustomDialogBinding.inflate(layoutInflater)
-        dialog.setContentView(binding.root)
+        val otpBinding = OtpPopUpBinding.inflate(LayoutInflater.from(requireContext()))
+        dialog.setContentView(otpBinding.root)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        // Tạo EditText cho OTP nhập vào
-        val otpEditText = EditText(requireContext()).apply {
-            hint = "Enter OTP"
-            textSize = 16f
-            inputType = InputType.TYPE_CLASS_NUMBER
-        }
-
-        // Cập nhật nội dung tin nhắn
-        binding.tvMessage.text = "Enter the OTP sent to your phone"
-
-        // Thêm EditText vào dưới `tvMessage`
-        val parentLayout = binding.tvMessage.parent as LinearLayout
-        parentLayout.addView(otpEditText, 1)
-
-        // Xử lý khi bấm Verify
-        binding.btnYes.text = "Verify"
-        binding.btnYes.setOnClickListener {
-            val code = otpEditText.text.toString().trim()
+        otpBinding.btnVerify.setOnClickListener {
+            val code = otpBinding.etOtpCode.text.toString().trim()
             if (code.isNotEmpty()) {
-                verifyCode(code) // Xác minh OTP
+                verifyCode(code)
                 dialog.dismiss()
             } else {
-                Toast.makeText(requireContext(), "Please enter the OTP", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(requireContext(), "Please Enter OPT Code", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // Xử lý khi bấm Cancel
-        binding.btnCancel.text = "Cancel"
-        binding.btnCancel.setOnClickListener {
+        otpBinding.btnCancel.setOnClickListener {
             dialog.dismiss()
         }
 
-        // Hiển thị dialog
         dialog.show()
     }
 
@@ -151,66 +131,86 @@ class AddPhoneBottomSheet(private val viewModel: PayOutViewModel) : BaseBottomSh
         verificationId?.let {
             val credential = PhoneAuthProvider.getCredential(it, code)
             signInWithCredential(credential)
-        } ?: run {
-            if (isAdded) {
-                Toast.makeText(context, "Error: Verification ID is null", Toast.LENGTH_SHORT).show()
-            }
-        }
+        } ?: Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
     }
 
     private fun signInWithCredential(credential: PhoneAuthCredential) {
-        progressDialog.setMessage("Verifying code...")
+        progressDialog.setMessage(getString(R.string.verifying_code))
         progressDialog.show()
 
         val currentUser = auth.currentUser
-        if (currentUser != null) {
-            if (currentUser.phoneNumber.isNullOrEmpty()) {
-                // Nếu tài khoản chưa có số điện thoại -> liên kết lần đầu
-                currentUser.linkWithCredential(credential)
+        currentUser?.let { user ->
+            if (user.phoneNumber.isNullOrEmpty()) {
+                // Nếu chưa có số điện thoại, tiến hành liên kết
+                user.linkWithCredential(credential)
                     .addOnCompleteListener { task ->
                         progressDialog.dismiss()
                         if (task.isSuccessful) {
-                            val phoneNumber = currentUser.phoneNumber ?: "Unknown"
-                            Log.d("AddPhoneBottomSheet", "Phone updated successfully: $phoneNumber")
-                            viewModel.updatePhone(phoneNumber)
-                            dismiss()
+                            val phoneNumber = task.result?.user?.phoneNumber
+                            if (phoneNumber != null) {
+                                savePhoneNumberToRTDB(phoneNumber)
+                            }
                         } else {
-                            handleLinkingError(task.exception)
+                            // Kiểm tra nếu số điện thoại đã được sử dụng
+                            if (task.exception is FirebaseAuthUserCollisionException) {
+                                Toast.makeText(
+                                    context,
+                                    getString(R.string.phone_already_in_use),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
+                                handleFirebaseError(task.exception)
+                            }
                         }
                     }
             } else {
-                // Nếu tài khoản đã có số điện thoại -> cập nhật số mới
-                currentUser.updatePhoneNumber(credential)
+                // Nếu đã có số điện thoại, tiến hành cập nhật
+                user.updatePhoneNumber(credential)
                     .addOnCompleteListener { task ->
                         progressDialog.dismiss()
                         if (task.isSuccessful) {
-                            val phoneNumber = currentUser.phoneNumber ?: "Unknown"
-                            Log.d("AddPhoneBottomSheet", "Phone updated successfully: $phoneNumber")
-                            viewModel.updatePhone(phoneNumber)
-                            dismiss()
+                            val phoneNumber = user.phoneNumber
+                            if (phoneNumber != null) {
+                                savePhoneNumberToRTDB(phoneNumber)
+                            }
                         } else {
-                            handleUpdateError(task.exception)
+                            handleFirebaseError(task.exception)
                         }
                     }
             }
-        } else {
+        } ?: run {
             progressDialog.dismiss()
             Log.e("AddPhoneBottomSheet", "No user logged in.")
-            Toast.makeText(requireContext(), "Error: No user logged in", Toast.LENGTH_SHORT).show()
-        }
-    }
-    private fun handleLinkingError(exception: Exception?) {
-        if (exception is FirebaseAuthUserCollisionException) {
-            Log.e("AddPhoneBottomSheet", "Phone number already in use.")
-            Toast.makeText(requireContext(), "This phone number is already linked to another account.", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(requireContext(), "Failed to link phone number: ${exception?.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun handleUpdateError(exception: Exception?) {
-        Log.e("AddPhoneBottomSheet", "Failed to update phone number: ${exception?.message}")
-        Toast.makeText(requireContext(), "Failed to update phone number: ${exception?.message}", Toast.LENGTH_SHORT).show()
+    private fun savePhoneNumberToRTDB(phoneNumber: String) {
+        viewModel.updatePhone(phoneNumber)
+        viewModel.updatePhoneResult.observe(viewLifecycleOwner) { result ->
+            result.onSuccess {
+                //Toast.makeText(context, getString(R.string.phone_saved_success), Toast.LENGTH_SHORT).show()
+                dismiss()
+            }.onFailure {
+                //Toast.makeText(context, getString(R.string.failed_to_save_phone, it.message), Toast.LENGTH_SHORT).show()
+                unlinkPhoneNumber()
+            }
+        }
+    }
+
+    private fun unlinkPhoneNumber() {
+        auth.currentUser?.delete()?.addOnSuccessListener {
+            Log.d("AddPhoneBottomSheet", "Phone number unlinked successfully.")
+        }?.addOnFailureListener {
+            Log.e("AddPhoneBottomSheet", "Failed to unlink phone number: ${it.message}")
+        }
+    }
+
+    private fun handleFirebaseError(exception: Exception?) {
+        if (exception is FirebaseAuthUserCollisionException) {
+            //Toast.makeText(context, getString(R.string.phone_already_in_use), Toast.LENGTH_LONG).show()
+        } else {
+            //Toast.makeText(context, getString(R.string.failed_to_link_phone, exception?.message), Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {

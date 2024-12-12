@@ -2,7 +2,7 @@ package com.example.naisupho.di
 
 import android.app.Application
 import android.content.Context
-import com.example.naisupho.LocaleHelper
+import com.example.naisupho.utils.LocaleHelper
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

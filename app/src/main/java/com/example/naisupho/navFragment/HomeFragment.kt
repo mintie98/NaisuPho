@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.location.Geocoder
 import kotlinx.coroutines.*
 import android.net.Uri
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
-import com.example.naisupho.BaseFragment
+import com.example.naisupho.utils.BaseFragment
 import com.example.naisupho.bottomsheet.MenuBootomSheetFragment
 import com.example.naisupho.NotificationActivity
 import com.example.naisupho.R
@@ -173,7 +172,8 @@ class HomeFragment : BaseFragment() {
         val imageList = listOf(
             SlideModel(R.drawable.banner1, ScaleTypes.FIT),
             SlideModel(R.drawable.banner2, ScaleTypes.FIT),
-            SlideModel(R.drawable.banner3, ScaleTypes.FIT)
+            SlideModel(R.drawable.banner3, ScaleTypes.FIT),
+            SlideModel(R.drawable.banner4, ScaleTypes.FIT)
         )
         binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
     }

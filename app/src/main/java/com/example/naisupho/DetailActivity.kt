@@ -48,7 +48,7 @@ class DetailActivity : BaseActivity() {
 
     private fun setupUI() {
         binding.detailItemName.text = itemName
-        binding.detailItemPrice.text = "Price: ￥$itemPrice"
+        binding.detailItemPrice.text = getString(R.string.price, itemPrice)
         binding.detailItemDescription.text = itemDetail
 
         val uri = Uri.parse(itemImage)

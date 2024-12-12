@@ -52,9 +52,8 @@ class SearchActivity : BaseActivity() {
             Category("category_id5", "Wraps&rolls", R.drawable.icongoicuon),
             Category("category_id6", "Gỏi", R.drawable.icongoi),
             Category("category_id7", "Desserts", R.drawable.iconche),
-            Category("category_id8", "Other", R.drawable.icondaonia)
+            Category("category_id8", "Other", R.drawable.ic_other)
  //           Category("category_id9", "Salads", R.drawable.pho),
-//            Category("category_id10", "Desserts", R.drawable.pho)
         )
 
         val adapter = CategoryAdapter(categories) { category ->

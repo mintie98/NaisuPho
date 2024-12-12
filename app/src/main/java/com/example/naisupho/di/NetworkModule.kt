@@ -1,7 +1,7 @@
 package com.example.naisupho.di
 
 import com.example.naisupho.BuildConfig
-import com.example.naisupho.interfaces.RetrofitClient
+import com.example.naisupho.interfaces.MatrixApiRetrofitClient
 import com.example.naisupho.interfaces.ZipcloudApiService
 import dagger.Module
 import dagger.Provides
@@ -24,21 +24,11 @@ object NetworkModule {
         return OkHttpClient.Builder().build()
     }
 
-
-    // Cấu hình OkHttpClient cho Zipcloud với API key
-    @Provides
-    @Singleton
-    @Named("ZipcloudClient")
-    fun provideZipcloudOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .build()
-    }
-
     // Cấu hình Retrofit cho Google API
     //Google Matrix API
     @Provides
     @Singleton
-    @Named("GoogleRetrofit")
+    @Named("GoogleMatrixRetrofit")
     fun provideGoogleRetrofit(@Named("CommonClient") okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://maps.googleapis.com/maps/api/")
@@ -51,7 +41,7 @@ object NetworkModule {
     @Provides
     @Singleton
     @Named("ZipcloudRetrofit")
-    fun provideZipcloudRetrofit(@Named("ZipcloudClient") okHttpClient: OkHttpClient): Retrofit {
+    fun provideZipcloudRetrofit(@Named("CommonClient") okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://zipcloud.ibsnet.co.jp/api/")
             .client(okHttpClient)
@@ -63,9 +53,9 @@ object NetworkModule {
     //anotation
     @Provides
     @Singleton
-    @Named("GoogleClient")
-    fun provideGoogleRetrofitClient(@Named("GoogleRetrofit") retrofit: Retrofit): RetrofitClient {
-        return retrofit.create(RetrofitClient::class.java)
+    @Named("GoogleMatrixClient")
+    fun provideGoogleRetrofitClient(@Named("GoogleMatrixRetrofit") retrofit: Retrofit): MatrixApiRetrofitClient {
+        return retrofit.create(MatrixApiRetrofitClient::class.java)
     }
 
     // Tạo ZipcloudApiService để gọi API Zipcloud

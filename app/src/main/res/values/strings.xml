@@ -165,4 +165,18 @@
     <string name="total_amount_format">Total: ￥%d</string>
     <string name="logout_message">Are you sure you want to logout?</string>
     <string name="choose_language">Choose Language</string>
+    <string name="empty_cart">There is nothing in your cart!</string>
+    <string name="empty_transaction">No transactions available</string>
+    <string name="price">Price: ￥%1$d</string>
+    <string name="sending_verification_code">Sending verification code...</string>
+    <string name="verifying_code">Verifying code...</string>
+    <string name="enter_otp_message">Enter the OTP sent to your phone</string>
+    <string name="otp">Enter OTP</string>
+    <string name="verify">Verify</string>
+    <string name="add_phone_number">No phone number added</string>
+    <string name="payment_success_title">Payment Successful</string>
+    <string name="payment_failed_title">Payment Failed</string>
+    <string name="payment_success_message">Your payment has been processed successfully!</string>
+    <string name="payment_failed_message">There was an error processing your payment. Please try again.</string>
+    <string name="phone_already_in_use">Phone number already in use.</string>
 </resources>

@@ -69,8 +69,8 @@
                     android:id="@+id/delete_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@string/delete"
+                    android:layout_marginEnd="16dp"
                     android:textSize="14sp"
                     android:textColor="@android:color/holo_red_dark" />
 
@@ -78,8 +78,8 @@
                     android:id="@+id/copy_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@string/copy"
+                    android:layout_marginEnd="16dp"
                     android:textSize="14sp"
                     android:textColor="@android:color/holo_blue_dark" />
 
@@ -87,7 +87,6 @@
                     android:id="@+id/edit_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:text="@string/edit"
                     android:textSize="14sp"

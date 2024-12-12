@@ -22,6 +22,10 @@ class PayOutViewModel @Inject constructor() : ViewModel() {
     private val _phoneNumber = MutableLiveData<String?>()
     val phoneNumber: LiveData<String?> get() = _phoneNumber
 
+    private val _updatePhoneResult = MutableLiveData<Result<Unit>>()
+    val updatePhoneResult: LiveData<Result<Unit>> get() = _updatePhoneResult
+
+
     private val _totalCost = MutableLiveData<Int>()
     val totalCost: LiveData<Int> get() = _totalCost
 
@@ -121,18 +125,26 @@ class PayOutViewModel @Inject constructor() : ViewModel() {
      * Cập nhật số điện thoại lên Firebase Realtime Database
      */
     fun updatePhone(phoneNumber: String) {
-        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId == null) {
+            Log.e("PayOutViewModel", "User ID is null. Cannot update phone number.")
+            _updatePhoneResult.value = Result.failure(Exception("User ID is null"))
+            return
+        }
+
         Log.d("PayOutViewModel", "Updating phone number: $phoneNumber")
         Log.d("PayOutViewModel", "Current user ID: $userId")
 
         val phoneRef = FirebaseDatabase.getInstance().getReference("Users/$userId/phoneNumber")
-        phoneRef.setValue(phoneNumber) // Trực tiếp dùng phoneNumber đã xác minh
+        phoneRef.setValue(phoneNumber)
             .addOnSuccessListener {
                 _phoneNumber.value = phoneNumber
+                _updatePhoneResult.value = Result.success(Unit) // Thành công
                 Log.d("PayOutViewModel", "Phone number updated successfully: $phoneNumber")
             }
-            .addOnFailureListener {
-                Log.e("PayOutViewModel", "Failed to update phone number: ${it.message}")
+            .addOnFailureListener { exception ->
+                _updatePhoneResult.value = Result.failure(exception) // Lỗi
+                Log.e("PayOutViewModel", "Failed to update phone number: ${exception.message}")
             }
     }
 

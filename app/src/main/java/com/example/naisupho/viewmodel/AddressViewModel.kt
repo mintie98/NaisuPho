@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.naisupho.interfaces.ZipcloudApiService
-import com.example.naisupho.interfaces.ZipcloudResponse
+import com.example.naisupho.model.ZipcloudResponse
 import com.example.naisupho.model.Address
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*

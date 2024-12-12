@@ -2,7 +2,7 @@ package com.example.naisupho.repository
 
 import android.util.Log
 import com.example.naisupho.interfaces.MatrixApiRetrofitClient
-import com.example.naisupho.interfaces.TravelTimeResponse
+import com.example.naisupho.model.TravelTimeResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

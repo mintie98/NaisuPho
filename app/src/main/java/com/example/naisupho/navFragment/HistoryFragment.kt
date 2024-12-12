@@ -1,14 +1,12 @@
 package com.example.naisupho.navFragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.naisupho.BaseFragment
-import com.example.naisupho.R
+import com.example.naisupho.utils.BaseFragment
 import com.example.naisupho.adapter.HistoryAdapter
 import com.example.naisupho.databinding.FragmentHistoryBinding
 import com.example.naisupho.viewmodel.HistoryViewModel
@@ -52,6 +50,13 @@ class HistoryFragment : BaseFragment() {
     private fun observeViewModel() {
         viewModel.transactionList.observe(viewLifecycleOwner) { transactions ->
             historyAdapter.updateTransactions(transactions)
+            if (transactions.isEmpty()){
+                binding.tvNoTransactions.visibility = View.VISIBLE
+                binding.rvTransactionHistory.visibility = View.GONE
+            } else {
+                binding.tvNoTransactions.visibility = View.GONE
+                binding.rvTransactionHistory.visibility = View.VISIBLE
+            }
         }
     }
 

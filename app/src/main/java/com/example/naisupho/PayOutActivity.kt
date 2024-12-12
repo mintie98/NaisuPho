@@ -33,7 +33,6 @@ class PayOutActivity : BaseActivity() {
     }
     private val viewModel: PayOutViewModel by viewModels()
     private val cartViewModel: CartViewModel by viewModels()
-    private val addressViewModel: AddressViewModel by viewModels()
     private lateinit var cartItemAdapter: CartItemAdapter
     private val client = OkHttpClient()
     private var isExpanded = false
@@ -113,7 +112,7 @@ class PayOutActivity : BaseActivity() {
             val displayAddress = if (address != null) {
                 "${address.postcode}-${address.address1}, ${address.address2}".trim()
             } else {
-                "Add Address"
+                getString(R.string.add_new_address)
             }
 
             binding.tvAddress.text = displayAddress
@@ -139,7 +138,7 @@ class PayOutActivity : BaseActivity() {
             cartItemAdapter.updateItems(cartItems) // Cập nhật dữ liệu vào adapter
         }
         viewModel.phoneNumber.observe(this) { phoneNumber ->
-            binding.tvPhoneNumber.text = phoneNumber ?: "No phone number added"
+            binding.tvPhoneNumber.text = phoneNumber ?: getString(R.string.add_phone_number)
         }
     }
     private fun setupDropdownLogic() {
@@ -240,8 +239,8 @@ class PayOutActivity : BaseActivity() {
 
 
     private fun showPaymentPopup(success: Boolean) {
-        val title = if (success) "Payment Successful" else "Payment Failed"
-        val message = if (success) "Your payment has been processed successfully!" else "There was an error processing your payment. Please try again."
+        val title = if (success) (getString(R.string.payment_success_title)) else (getString(R.string.payment_failed_title))
+        val message = if (success) (getString(R.string.payment_success_message)) else (getString(R.string.payment_failed_message))
         val builder = AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(message)

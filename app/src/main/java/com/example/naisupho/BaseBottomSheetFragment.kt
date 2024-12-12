@@ -1,6 +1,7 @@
 package com.example.naisupho
 
 import android.content.Context
+import com.example.naisupho.utils.LocaleHelper
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 open class BaseBottomSheetFragment : BottomSheetDialogFragment() {

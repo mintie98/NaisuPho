@@ -2,18 +2,15 @@ package com.example.naisupho
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.example.naisupho.databinding.ActivitySettingBinding
+import com.example.naisupho.utils.LocaleHelper
 import com.google.firebase.auth.FirebaseAuth
-import java.util.Locale
 
-class SettingActivity : AppCompatActivity() {
+class SettingActivity : BaseActivity() {
     private lateinit var binding: ActivitySettingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +29,7 @@ class SettingActivity : AppCompatActivity() {
         }
 
         // Xử lý khi người dùng chọn ngôn ngữ
-        binding.language.setOnClickListener {
+        binding.nextArrow.setOnClickListener {
             showLanguageSelectionDialog()
         }
 

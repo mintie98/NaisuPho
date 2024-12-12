@@ -1,4 +1,4 @@
-package com.example.naisupho.interfaces
+package com.example.naisupho.model
 
 //Matrix Distance API
 data class TravelTimeResponse(
