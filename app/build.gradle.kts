@@ -1,3 +1,5 @@
+import java.util.Properties
+import java.io.FileInputStream
 plugins {
     kotlin("kapt")
     alias(libs.plugins.androidApplication)
@@ -7,13 +9,21 @@ plugins {
 
 }
 
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+val keystoreProperties = Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
 android {
     namespace = "com.example.naisupho"
     compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.naisupho"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -22,7 +32,12 @@ android {
     }
     buildFeatures{
         viewBinding = true
+        buildConfig = true
     }
+
+    signingConfigs {
+    }
+
 
     buildTypes {
         release {
@@ -31,7 +46,27 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            // Định nghĩa các API keys từ keystoreProperties
+            buildConfigField("String", "GOOGLE_Martrix_API", "\"${keystoreProperties["GOOGLE_Martrix_API"]}\"")
+            buildConfigField("String", "PAYPAY_SECRET_API", "\"${keystoreProperties["PAYPAY_SECRET_API"]}\"")
+            buildConfigField("String", "google_app_id", "\"${keystoreProperties["google_app_id"]}\"")
+            buildConfigField("String", "google_api_key", "\"${keystoreProperties["google_api_key"]}\"")
+            buildConfigField("String", "gcm_defaultSenderId", "\"${keystoreProperties["gcm_defaultSenderId"]}\"")
+            buildConfigField("String", "default_web_client_id", "\"${keystoreProperties["default_web_client_id"]}\"")
         }
+        debug {
+            // Nếu cần dùng API keys cho debug cũng có thể làm tương tự
+            buildConfigField("String", "GOOGLE_Martrix_API", "\"${keystoreProperties["GOOGLE_Martrix_API"]}\"")
+            buildConfigField("String", "PAYPAY_SECRET_API", "\"${keystoreProperties["PAYPAY_SECRET_API"]}\"")
+            buildConfigField("String", "google_app_id", "\"${keystoreProperties["google_app_id"]}\"")
+            buildConfigField("String", "google_api_key", "\"${keystoreProperties["google_api_key"]}\"")
+            buildConfigField("String", "gcm_defaultSenderId", "\"${keystoreProperties["gcm_defaultSenderId"]}\"")
+            buildConfigField("String", "default_web_client_id", "\"${keystoreProperties["default_web_client_id"]}\"")
+        }
+    }
+    packagingOptions {
+        exclude("META-INF/NOTICE.md")
+        exclude("META-INF/LICENSE.md")
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -71,6 +106,7 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
     implementation ("com.google.android.gms:play-services-location:18.0.0")
     implementation ("com.google.android.material:material:1.4.0")
+    implementation ("com.google.firebase:firebase-auth:21.3.0")
 
     //Image Slider
     implementation ("com.github.denzcoskun:ImageSlideshow:0.1.2")
@@ -79,7 +115,16 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    //OkHttp
+    implementation ("com.squareup.okhttp3:okhttp:4.11.0")
+
+
     //Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+
+    //Paypay SDK
+    implementation("org.hibernate.validator:hibernate-validator-annotation-processor:8.0.1.Final")
+    implementation ("jp.ne.paypay:paypayopa:1.0.8")
+
 }
