@@ -3,6 +3,8 @@ package com.example.naisupho.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.naisupho.R
 import com.example.naisupho.databinding.TransactionItemBinding
 import com.example.naisupho.model.TransactionItem
 
@@ -34,6 +36,12 @@ class TransactionItemsAdapter(
             binding.tvItemName.text = item.name
             binding.tvItemQuantity.text = "x${item.quantity}"
             binding.tvItemPrice.text = "￥${item.price}"
+            val uri = item.image
+            Glide.with(binding.root)
+                .load(uri)
+                .placeholder(R.drawable.ic_loading)
+                .error(R.drawable.pho)
+                .into(binding.imgItemImage)
         }
     }
 }
