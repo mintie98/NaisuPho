@@ -1,11 +1,13 @@
 package com.example.naisupho.userInfo
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.naisupho.BaseActivity
+import com.example.naisupho.R
 import com.example.naisupho.adapter.AddressAdapter
 import com.example.naisupho.bottomsheet.AddressBottomSheet
 import com.example.naisupho.databinding.ActivityAddressBinding
@@ -49,14 +51,25 @@ class AddressActivity : BaseActivity() {
     }
 
     private fun setupRecyclerView(userName: String) {
-        addressAdapter = AddressAdapter (userName){ address, action ->
+        addressAdapter = AddressAdapter(userName) { address, action ->
             when (action) {
                 "edit" -> editAddress(address)
-                "delete" -> addressViewModel.deleteAddress(address.id)
+                "delete" -> showDeleteConfirmationDialog(address.id)
             }
         }
         binding.addressRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.addressRecyclerView.adapter = addressAdapter
+    }
+    private fun showDeleteConfirmationDialog(addressId: String) {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle(getString(R.string.delete_address_title)) // Bạn có thể thêm string resource này trong file strings.xml
+            .setMessage(getString(R.string.delete_address_message)) // Cũng thêm string resource này
+            .setPositiveButton(getString(R.string.delete_cart_yes)) { _, _ ->
+                addressViewModel.deleteAddress(addressId) // Gọi ViewModel để xóa địa chỉ
+            }
+            .setNegativeButton(getString(R.string.delete_cart_no), null) // Nếu người dùng chọn "Không"
+            .create()
+        dialog.show()
     }
 
     private fun observeViewModel() {

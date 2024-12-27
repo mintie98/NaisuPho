@@ -180,6 +180,7 @@ class PayOutActivity : BaseActivity() {
                 response.use {
                     if (response.isSuccessful) {
                         runOnUiThread {
+                            cartViewModel.deleteCart(storeId)
                             showPaymentPopup(true)
                             saveTransactionToRTDB(userId, storeId, finalTotal) // Lưu giao dịch
                         }
