@@ -26,7 +26,7 @@ class HistoryViewModel @Inject constructor(
             .addOnSuccessListener { snapshot ->
                 val transactions = snapshot.children.mapNotNull {
                     it.getValue(Transaction::class.java)
-                }
+                }.sortedByDescending { it.timestamp }
                 _transactionList.value = transactions
             }
             .addOnFailureListener {

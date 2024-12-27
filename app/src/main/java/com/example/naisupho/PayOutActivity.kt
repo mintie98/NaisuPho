@@ -164,6 +164,7 @@ class PayOutActivity : BaseActivity() {
             return
         }
 
+        binding.progressBar.visibility = View.VISIBLE
         val url = "https://us-central1-naisupho.cloudfunctions.net/processPayment"
         val requestBody = JSONObject().apply {
             put("userAuthorizationId", userAuthorizationId)
@@ -177,21 +178,25 @@ class PayOutActivity : BaseActivity() {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
-                response.use {
-                    if (response.isSuccessful) {
-                        runOnUiThread {
+                runOnUiThread {
+                    binding.progressBar.visibility = View.GONE
+                    response.use {
+                        if (response.isSuccessful) {
+                            saveTransactionToRTDB(userId, storeId, finalTotal) // Lưu giao dịch
                             cartViewModel.deleteCart(storeId)
                             showPaymentPopup(true)
-                            saveTransactionToRTDB(userId, storeId, finalTotal) // Lưu giao dịch
+                        } else {
+                            showPaymentPopup(false)
                         }
-                    } else {
-                        runOnUiThread { showPaymentPopup(false) }
                     }
                 }
             }
 
             override fun onFailure(call: Call, e: IOException) {
-                runOnUiThread { showPaymentPopup(false) }
+                runOnUiThread {
+                    binding.progressBar.visibility = View.GONE
+                    showPaymentPopup(false)
+                }
             }
         })
     }
