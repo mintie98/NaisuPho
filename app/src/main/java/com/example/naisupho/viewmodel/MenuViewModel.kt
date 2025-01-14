@@ -4,22 +4,20 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.naisupho.model.MenuItem
 import com.example.naisupho.model.Stores
-import com.example.naisupho.repository.TravelTimeRepository
+import com.example.naisupho.repository.MoveTimeRepository
 import com.example.naisupho.utils.StringUtils
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.DatabaseError
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MenuViewModel @Inject constructor(
-    private val travelTimeRepository: TravelTimeRepository
+    private val travelTimeRepository: MoveTimeRepository
 ) : ViewModel() {
 
     private val _menuItems = MutableLiveData<List<MenuItem>>()

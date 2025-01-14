@@ -9,7 +9,7 @@ import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Named
 
-class TravelTimeRepository @Inject constructor(
+class MoveTimeRepository @Inject constructor(
     @Named("GoogleMatrixClient")private val retrofitClient: MatrixApiRetrofitClient,
     private val apiKey: String // API Key được tiêm từ Hilt
 ) {

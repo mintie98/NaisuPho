@@ -3,19 +3,14 @@ package com.example.naisupho.adapter
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.naisupho.R
 import com.example.naisupho.StoreActivity
 import com.example.naisupho.databinding.NearMeItemBinding
 import com.example.naisupho.model.Stores
-import com.example.naisupho.repository.TravelTimeRepository
-import dagger.hilt.android.qualifiers.ActivityContext
-import javax.inject.Inject
 
 class NearMeAdapter(
     private val storesList: List<Stores>,

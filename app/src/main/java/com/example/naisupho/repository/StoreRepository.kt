@@ -43,13 +43,4 @@ class StoreRepository @Inject constructor(
             }
         })
     }
-//    fun fetchStoreById(storeId: String, callback: (Stores) -> Unit) {
-//        val storeRef = firebaseDatabase.reference.child("Stores").child(storeId)
-//        storeRef.get().addOnSuccessListener { snapshot ->
-//            val store = snapshot.getValue(Stores::class.java)
-//            if (store != null) {
-//                callback(store)
-//            }
-//        }
-//    }
 }

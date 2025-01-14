@@ -2,7 +2,7 @@ package com.example.naisupho.di
 
 import com.example.naisupho.interfaces.MatrixApiRetrofitClient
 import com.example.naisupho.repository.StoreRepository
-import com.example.naisupho.repository.TravelTimeRepository
+import com.example.naisupho.repository.MoveTimeRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -30,8 +30,8 @@ object AppModule {
     fun provideTravelTimeRepository(
         @Named("GoogleMatrixClient")retrofitClient: MatrixApiRetrofitClient,
         @Named("GoogleApiKey")apiKey: String
-    ): TravelTimeRepository {
-        return TravelTimeRepository(retrofitClient, apiKey)
+    ): MoveTimeRepository {
+        return MoveTimeRepository(retrofitClient, apiKey)
     }
 
     @Provides
