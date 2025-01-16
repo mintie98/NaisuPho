@@ -39,6 +39,7 @@ class CartDetailActivity : BaseActivity() {
             intent.putExtra("storeId", storeId)
             intent.putExtra("storeName", binding.storeName.text)
             startActivity(intent)
+            finish()
         }
         binding.orderMoreButton.setOnClickListener {
             val intent = Intent(this, StoreActivity::class.java)

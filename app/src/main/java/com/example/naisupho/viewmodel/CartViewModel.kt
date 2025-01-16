@@ -107,7 +107,8 @@ class CartViewModel @Inject constructor(
 
         cartRef.removeValue().addOnSuccessListener {
             // Nếu xóa thành công, bạn có thể cập nhật lại danh sách giỏ hàng
-            fetchCartItems() // Cập nhật lại LiveData
+            //fetchCartItems() // Cập nhật lại LiveData
+            observeCartExistence()
         }.addOnFailureListener { error ->
             Log.e("CartViewModel", "Failed to delete cart: ${error.message}")
         }
@@ -211,7 +212,7 @@ class CartViewModel @Inject constructor(
 
         cartRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                _isCartEmpty.value = !snapshot.exists() // Giỏ hàng trống nếu không có dữ liệu
+                _isCartEmpty.value = !snapshot.children.any { it.hasChildren() }
             }
 
             override fun onCancelled(error: DatabaseError) {
